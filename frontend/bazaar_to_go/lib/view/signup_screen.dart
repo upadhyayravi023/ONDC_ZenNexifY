@@ -63,11 +63,13 @@ class SignupScreen extends StatelessWidget {
                         decoration: InputDecoration(
                             labelText: 'Password',
                             prefixIcon: const Icon(Icons.lock),
-                            suffixIcon: IconButton(
-                                onPressed: () => controller.togglePassword,
-                                icon: !controller.showPassword.value
-                                    ? const Icon(Icons.visibility)
-                                    : const Icon(Icons.visibility_off)),
+                            suffixIcon: Obx(
+                              () => IconButton(
+                                  onPressed: () => controller.togglePassword,
+                                  icon: !controller.showPassword.value
+                                      ? const Icon(Icons.visibility)
+                                      : const Icon(Icons.visibility_off)),
+                            ),
                             border: const OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: kDarkBlueColor))),
