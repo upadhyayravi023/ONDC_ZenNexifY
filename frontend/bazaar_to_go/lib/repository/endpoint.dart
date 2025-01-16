@@ -1,17 +1,41 @@
 enum Endpoint {
-  //user routes
-  signUp('https://yourdomain.com/api/ZenNexify/owner/signUp'), //POST
-  login('https://yourdomain.com/api/ZenNexify/owner/login'), //POST
-  updateInfo('https://yourdomain.com/api/ZenNexify/owner/login'), //POST
+  // User routes
+  signUp('https://yourdomain.com/api/ZenNexify/owner/signup', HttpMethod.post),
+  login('https://yourdomain.com/api/ZenNexify/owner/login', HttpMethod.post),
+  updateInfo(
+      'https://yourdomain.com/api/ZenNexify/owner/updateInfo', HttpMethod.post),
 
-  //store routes
-  createStore('https://yourdomain.com/api/ZenNexify/owner/stores'), //POST
-  fetchStore('https://yourdomain.com/api/ZenNexify/owner/stores'), //GET
+  // Store routes
+  postStore(
+      'https://yourdomain.com/api/ZenNexify/owner/stores', HttpMethod.post),
+  getStore('https://yourdomain.com/api/ZenNexify/owner/stores', HttpMethod.get),
 
-  //product routes
-  addProduct('https://yourdomain.com/api/ZenNexify/owner/stores'), //POST
-  fetchProduct('https://yourdomain.com/api/ZenNexify/owner/stores'); //GET
+  // Product routes
+  postProduct(
+      'https://yourdomain.com/api/ZenNexify/owner/products', HttpMethod.post),
+  getProduct(
+      'https://yourdomain.com/api/ZenNexify/owner/products', HttpMethod.get),
 
-  const Endpoint(this.url);
+  // Address lookup (using a more appropriate URL - consider a dedicated API)
+  getAddress('http://www.postalpincode.in/api/pincode/', HttpMethod.get);
+
   final String url;
+  final HttpMethod method;
+
+  const Endpoint(this.url, this.method);
+
+  String getUrl() {
+    return url;
+  }
+
+  HttpMethod getMethod() {
+    return method;
+  }
+}
+
+enum HttpMethod {
+  get,
+  post,
+  put,
+  delete,
 }
