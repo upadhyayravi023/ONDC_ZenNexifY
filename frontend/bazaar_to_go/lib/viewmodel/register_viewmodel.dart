@@ -12,7 +12,7 @@ class RegisterViewmodel {
     if (postalCode.isNotEmpty && postalCode.length == 6) {
       try {
         final http.Response response =
-            await ApiService().get(Endpoint.getAddress, postalCode);
+            await ApiService.get(Endpoint.getAddress, postalCode);
 
         if (response.statusCode == 200) {
           try {

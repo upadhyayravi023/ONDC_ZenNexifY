@@ -1,13 +1,70 @@
+import 'dart:convert';
+
 import 'package:bazaar_to_go/controllers/signup_controller.dart';
+import 'package:bazaar_to_go/repository/api_service.dart';
+import 'package:bazaar_to_go/repository/endpoint.dart';
 import 'package:bazaar_to_go/view/login_screen.dart';
+import 'package:bazaar_to_go/view/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+  void _onSignup() async {
+    print(_username.text);
+    print(_emailController.text);
+    print(_passwordController.text);
+    try {
+      final response = await ApiService.post(
+        Endpoint.signUp.getUrl(),
+        {
+          'username': _username.text.toString(),
+          'email': _emailController.text.toString(),
+          'password': _passwordController.text.toString()
+        }as Map<String, dynamic>,
+      );
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        Get.snackbar(
+          'Success',
+          'Signup Successful!',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+
+
+        Get.offAll(SplashScreen());
+      } else {
+        print("Signup Failed: ${response.statusCode}, ${response.body}");
+        Get.snackbar(
+          'Error',
+          'Signup Failed: ${response.body}',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (error) {
+      printError(info: error.toString());
+
+      Get.snackbar(
+        'Error',
+        'Signup failed. Please try again. \n$Error',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
+  SignupScreen({super.key});
   final Color kDarkBlueColor = const Color(0xFF363AC2);
+   final TextEditingController _username = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(SignupController());
@@ -46,7 +103,9 @@ class SignupScreen extends StatelessWidget {
                                 const Icon(CupertinoIcons.person_alt_circle),
                             border: const OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: kDarkBlueColor))),
+                                borderSide: BorderSide(color: kDarkBlueColor))
+                        ),
+                        controller: _username,
                       ),
                       SizedBox(height: 20.h),
                       TextFormField(
@@ -56,6 +115,7 @@ class SignupScreen extends StatelessWidget {
                             border: const OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: kDarkBlueColor))),
+                        controller: _emailController,
                       ),
                       SizedBox(height: 20.h),
                       TextFormField(
@@ -73,10 +133,13 @@ class SignupScreen extends StatelessWidget {
                             border: const OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: kDarkBlueColor))),
+                        controller: _passwordController,
                       ),
                       SizedBox(height: 20.h),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _onSignup();
+                        },
                         style: ElevatedButton.styleFrom(
                             fixedSize: Size(240.w, 48.h),
                             backgroundColor: kDarkBlueColor),
@@ -92,7 +155,7 @@ class SignupScreen extends StatelessWidget {
                           const Text("Already have account?"),
                           TextButton(
                             onPressed: () {
-                              Get.off(const LoginScreen());
+                              Get.off(LoginScreen());
                             },
                             child: const Text('Login'),
                           ),
