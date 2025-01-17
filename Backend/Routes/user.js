@@ -46,7 +46,7 @@ router.post('/userInformation', async (req, res) => {
 });
 
 router.get('/userInformation', async (req, res) => {
-    const { username } = req.query; // Using query parameters for the GET request
+    const { username } = req.body; // Using query parameters for the GET request
   
     // Validate input
     if (!username) {
