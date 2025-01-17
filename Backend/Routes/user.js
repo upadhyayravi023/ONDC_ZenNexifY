@@ -128,4 +128,15 @@ router.post('/', async (req, res) => {
     }
   })
 
+  router.post('/logout', (req, res) => {
+    const {username} = req.body
+    let user = userModel.findOne({username})
+    if(user){
+      res.clearCookie('token', { httpOnly: true }); // Clear the token cookie
+      res.status(200).json({ message: 'Logged out successfully' });
+    }
+    else{
+      res.status(400).json("not an user")}
+     
+    });
 module.exports = router;
