@@ -23,14 +23,12 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// Initialize Multer with the configuration
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit for each file
 });
 
-// Route to handle the form data along with file upload
 router.post('/userInformation',upload.fields([
   { name: 'PAN_Card', maxCount: 1 },
   { name: 'Aadhar_Card', maxCount: 1 }
@@ -73,5 +71,35 @@ router.post('/userInformation',upload.fields([
     res.status(500).json({ message: error.message });
   }
 });
+
+router.post('/', async (req, res) => {
+    const { username, email, password } = req.body;
+  
+    if (!username || !email || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+  
+    try {
+      const saltRounds = 10; 
+      const salt = await bcrypt.genSalt(saltRounds); 
+      const hashedPassword = await bcrypt.hash(password, salt);
+      const newUser = await userModel.create({
+        username,
+        email,
+        password:hashedPassword
+      });
+  
+      const token = generateToken({ email: newUser.email, id: newUser._id });
+      res.cookie('token', token, { httpOnly: true });
+  
+      res.status(201).json({
+        message: 'User signed up successfully',
+        user: newUser,
+      });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
 
 module.exports = router;
