@@ -45,7 +45,33 @@ router.post('/userInformation', async (req, res) => {
   }
 });
 
-
+router.get('/userInformation', async (req, res) => {
+    const { username } = req.query; // Using query parameters for the GET request
+  
+    // Validate input
+    if (!username) {
+      return res.status(400).json({ message: 'Username is required' });
+    }
+  
+    try {
+      // Find the user by username
+      const user = await userModel.findOne({ username });
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Return the user information
+      res.status(200).json({
+        message: 'User information retrieved successfully',
+        user,
+      });
+    } catch (error) {
+      console.error('Error fetching user information:', error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
 
 
 router.post('/', async (req, res) => {
