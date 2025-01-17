@@ -16,7 +16,7 @@ class OnBoarding extends StatelessWidget {
       body: OnBoardingSlider(
         finishButtonText: 'Get Started',
         onFinish: () {
-          Get.to(const LoginScreen());
+          Get.to( LoginScreen());
         },
         finishButtonStyle: FinishButtonStyle(
           backgroundColor: kDarkBlueColor,
@@ -32,7 +32,7 @@ class OnBoarding extends StatelessWidget {
           ),
         ),
         trailingFunction: () {
-          Get.to(const LoginScreen());
+          Get.to( LoginScreen());
         },
         skipTextButton: Text(
           'Skip',

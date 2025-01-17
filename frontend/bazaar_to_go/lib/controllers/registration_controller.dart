@@ -18,32 +18,86 @@ class RegistrationController extends GetxController {
   Rx<bool> selfloading = false.obs;
   String panUrl = "";
   String selfUrl = "";
+  RxString name = ''.obs;
+  RxString dob = ''.obs;
+  RxString phone = ''.obs;
 
-  Future<String?> handleImageSelection() async {
-    final XFile? imagePicked =
-        await ImagePicker().pickImage(source: ImageSource.camera);
+  // Address
+  RxString pincode = ''.obs;
+  RxString street = ''.obs;
+  RxString district = ''.obs;
+  RxString state = ''.obs;
 
-    if (imagePicked != null) {
-      final file = File(imagePicked.path);
-      try {
-        final uri = await CloudinaryService.uploadFile(file);
-        if (uri.toString() != 'https://example.com') {
-          return uri.toString();
-        } else {
-          Get.snackbar("Error", "Failed to upload image ${imagePicked.name}");
-        }
-        return null;
-      } catch (e) {
-        return null;
-      }
+  // Account details
+  RxString aadhar = ''.obs;
+  RxString pan = ''.obs;
+  RxString gstin = ''.obs;
+  RxString bankAccount = ''.obs;
+
+  void updateField(String field, String value) {
+    switch (field) {
+      case 'name':
+        name.value = value;
+        break;
+      case 'dob':
+        dob.value = value;
+        break;
+      case 'phone':
+        phone.value = value;
+        break;
+      case 'pincode':
+        pincode.value = value;
+        break;
+      case 'street':
+        street.value = value;
+        break;
+      case 'district':
+        district.value = value;
+        break;
+      case 'state':
+        state.value = value;
+        break;
+      case 'aadhar':
+        aadhar.value = value;
+        break;
+      case 'pan':
+        pan.value = value;
+        break;
+      case 'gstin':
+        gstin.value = value;
+        break;
+      case 'bankAccount':
+        bankAccount.value = value;
+        break;
     }
   }
 
-  void updatePanLoading() {
-    panloading.value = !panloading.value;
+    Future<String?> handleImageSelection() async {
+      final XFile? imagePicked =
+      await ImagePicker().pickImage(source: ImageSource.camera);
+
+      if (imagePicked != null) {
+        final file = File(imagePicked.path);
+        try {
+          final uri = await CloudinaryService.uploadFile(file);
+          if (uri.toString() != 'https://example.com') {
+            return uri.toString();
+          } else {
+            Get.snackbar("Error", "Failed to upload image ${imagePicked.name}");
+          }
+          return null;
+        } catch (e) {
+          return null;
+        }
+      }
+    }
+
+    void updatePanLoading() {
+      panloading.value = !panloading.value;
+    }
+
+    void updateSelfLoading() {
+      selfloading.value = !selfloading.value;
+    }
   }
 
-  void updateSelfLoading() {
-    selfloading.value = !selfloading.value;
-  }
-}

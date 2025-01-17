@@ -9,7 +9,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+ RegisterScreen({super.key});
 
   @override
   State<RegisterScreen> createState() => StateRegisterScreen();
@@ -67,7 +67,7 @@ class StateRegisterScreen extends State<RegisterScreen> {
                         height: 20,
                       ),
                       FormBuilderDateTimePicker(
-                        name: 'date_of_birth',
+                        name: 'dob',
                         firstDate: DateTime(1970),
                         inputType: InputType.date,
                         format: DateFormat('yyyy-MM-dd'),
@@ -332,6 +332,8 @@ class StateRegisterScreen extends State<RegisterScreen> {
     return FormBuilderTextField(
       autovalidateMode: AutovalidateMode.onUnfocus,
       name: name,
+        controller:TextEditingController(
+            text: controller.name.value),
       decoration: InputDecoration(
         fillColor: Color.fromARGB(255, 243, 245, 245),
         filled: true,
@@ -347,5 +349,6 @@ class StateRegisterScreen extends State<RegisterScreen> {
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
     );
+
   }
 }

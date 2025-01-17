@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:  RegisterShop(),
+      home:  SplashScreen(),
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         // Get the media query size
