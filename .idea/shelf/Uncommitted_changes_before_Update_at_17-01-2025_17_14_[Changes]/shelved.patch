@@ -1,0 +1,729 @@
+Index: frontend/bazaar_to_go/lib/controllers/registration_controller.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'dart:io';\r\n\r\nimport 'package:bazaar_to_go/repository/cloudinary_service.dart';\r\nimport 'package:image_picker/image_picker.dart';\r\nimport 'package:get/get.dart';\r\n\r\nclass RegistrationController extends GetxController {\r\n  Rx<bool> namehaserror = false.obs;\r\n  Rx<bool> phonehaserror = false.obs;\r\n  Rx<bool> statehaserror = false.obs;\r\n  Rx<bool> cityhaserror = false.obs;\r\n  Rx<bool> pinhaserror = false.obs;\r\n  Rx<bool> aadharhaserror = false.obs;\r\n  Rx<bool> panhaserror = false.obs;\r\n  Rx<bool> accounthaserror = false.obs;\r\n  Rx<bool> gstinhaserror = false.obs;\r\n  Rx<bool> panloading = false.obs;\r\n  Rx<bool> selfloading = false.obs;\r\n  String panUrl = \"\";\r\n  String selfUrl = \"\";\r\n\r\n  Future<String?> handleImageSelection() async {\r\n    final XFile? imagePicked =\r\n        await ImagePicker().pickImage(source: ImageSource.camera);\r\n\r\n    if (imagePicked != null) {\r\n      final file = File(imagePicked.path);\r\n      try {\r\n        final uri = await CloudinaryService.uploadFile(file);\r\n        if (uri.toString() != 'https://example.com') {\r\n          return uri.toString();\r\n        } else {\r\n          Get.snackbar(\"Error\", \"Failed to upload image ${imagePicked.name}\");\r\n        }\r\n        return null;\r\n      } catch (e) {\r\n        return null;\r\n      }\r\n    }\r\n  }\r\n\r\n  void updatePanLoading() {\r\n    panloading.value = !panloading.value;\r\n  }\r\n\r\n  void updateSelfLoading() {\r\n    selfloading.value = !selfloading.value;\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/lib/controllers/registration_controller.dart b/frontend/bazaar_to_go/lib/controllers/registration_controller.dart
+--- a/frontend/bazaar_to_go/lib/controllers/registration_controller.dart	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/lib/controllers/registration_controller.dart	(date 1737113741486)
+@@ -18,32 +18,86 @@
+   Rx<bool> selfloading = false.obs;
+   String panUrl = "";
+   String selfUrl = "";
++  RxString name = ''.obs;
++  RxString dob = ''.obs;
++  RxString phone = ''.obs;
++
++  // Address
++  RxString pincode = ''.obs;
++  RxString street = ''.obs;
++  RxString district = ''.obs;
++  RxString state = ''.obs;
++
++  // Account details
++  RxString aadhar = ''.obs;
++  RxString pan = ''.obs;
++  RxString gstin = ''.obs;
++  RxString bankAccount = ''.obs;
++
++  void updateField(String field, String value) {
++    switch (field) {
++      case 'name':
++        name.value = value;
++        break;
++      case 'dob':
++        dob.value = value;
++        break;
++      case 'phone':
++        phone.value = value;
++        break;
++      case 'pincode':
++        pincode.value = value;
++        break;
++      case 'street':
++        street.value = value;
++        break;
++      case 'district':
++        district.value = value;
++        break;
++      case 'state':
++        state.value = value;
++        break;
++      case 'aadhar':
++        aadhar.value = value;
++        break;
++      case 'pan':
++        pan.value = value;
++        break;
++      case 'gstin':
++        gstin.value = value;
++        break;
++      case 'bankAccount':
++        bankAccount.value = value;
++        break;
++    }
++  }
+ 
+-  Future<String?> handleImageSelection() async {
+-    final XFile? imagePicked =
+-        await ImagePicker().pickImage(source: ImageSource.camera);
++    Future<String?> handleImageSelection() async {
++      final XFile? imagePicked =
++      await ImagePicker().pickImage(source: ImageSource.camera);
+ 
+-    if (imagePicked != null) {
+-      final file = File(imagePicked.path);
+-      try {
+-        final uri = await CloudinaryService.uploadFile(file);
+-        if (uri.toString() != 'https://example.com') {
+-          return uri.toString();
+-        } else {
+-          Get.snackbar("Error", "Failed to upload image ${imagePicked.name}");
+-        }
+-        return null;
+-      } catch (e) {
+-        return null;
+-      }
+-    }
+-  }
++      if (imagePicked != null) {
++        final file = File(imagePicked.path);
++        try {
++          final uri = await CloudinaryService.uploadFile(file);
++          if (uri.toString() != 'https://example.com') {
++            return uri.toString();
++          } else {
++            Get.snackbar("Error", "Failed to upload image ${imagePicked.name}");
++          }
++          return null;
++        } catch (e) {
++          return null;
++        }
++      }
++    }
+ 
+-  void updatePanLoading() {
+-    panloading.value = !panloading.value;
+-  }
++    void updatePanLoading() {
++      panloading.value = !panloading.value;
++    }
+ 
+-  void updateSelfLoading() {
+-    selfloading.value = !selfloading.value;
+-  }
+-}
++    void updateSelfLoading() {
++      selfloading.value = !selfloading.value;
++    }
++  }
++
+Index: frontend/bazaar_to_go/lib/view/login_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:bazaar_to_go/controllers/login_controller.dart';\r\nimport 'package:bazaar_to_go/view/signup_screen.dart';\r\nimport 'package:flutter/material.dart';\r\nimport 'package:flutter_screenutil/flutter_screenutil.dart';\r\nimport 'package:get/get.dart';\r\n\r\nclass LoginScreen extends StatelessWidget {\r\n  \r\n  const LoginScreen({super.key});\r\n  \r\n  final Color kDarkBlueColor = const Color(0xFF363AC2);\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    final controller = Get.put(LoginController());\r\n    return Scaffold(\r\n      backgroundColor: Colors.white,\r\n      body: SafeArea(\r\n        child: SingleChildScrollView(\r\n          child: OrientationBuilder(\r\n            builder: (context, orientation) {\r\n              return Padding(\r\n                padding: const EdgeInsets.all(16.0),\r\n                child: Column(\r\n                  crossAxisAlignment: CrossAxisAlignment.stretch,\r\n                  children: [\r\n                    SizedBox(\r\n                      height: 360.h,\r\n                      width: 320.w,\r\n                      child: Image.asset(\r\n                        'assets/images/login_image.png',\r\n                        fit: BoxFit.cover,\r\n                      ),\r\n                    ),\r\n                    const SizedBox(height: 20),\r\n                    const Text(\r\n                      'Login',\r\n                      style:\r\n                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),\r\n                      textAlign: TextAlign.center,\r\n                    ),\r\n                    SizedBox(height: 25.h),\r\n                    TextFormField(\r\n                      decoration: InputDecoration(\r\n                          labelText: 'Email',\r\n                          prefixIcon: const Icon(Icons.email),\r\n                          border: const OutlineInputBorder(),\r\n                          focusedBorder: OutlineInputBorder(\r\n                              borderSide: BorderSide(color: kDarkBlueColor))),\r\n                    ),\r\n                    SizedBox(height: 20.h),\r\n                    TextFormField(\r\n                      obscureText: !controller.showPassword.value,\r\n                      decoration: InputDecoration(\r\n                          labelText: 'Password',\r\n                          prefixIcon: const Icon(Icons.lock),\r\n                          suffixIcon:  Obx(()=>IconButton(onPressed:()=>controller.togglePassword, icon: !controller.showPassword.value? const Icon(Icons.visibility): const Icon(Icons.visibility_off)),),\r\n                          border: const OutlineInputBorder(),\r\n                          focusedBorder: OutlineInputBorder(\r\n                              borderSide: BorderSide(color: kDarkBlueColor))),\r\n                    ),\r\n                    const SizedBox(height: 10),\r\n                    Align(\r\n                      alignment: Alignment.centerRight,\r\n                      child: TextButton(\r\n                        onPressed: () {},\r\n                        child: Text('Forgot Password ?'),\r\n                      ),\r\n                    ),\r\n                    const SizedBox(height: 20),\r\n                    ElevatedButton(\r\n                      onPressed: () {},\r\n                      style: ElevatedButton.styleFrom(\r\n                          fixedSize: Size(240.w, 48.h),\r\n                          backgroundColor: kDarkBlueColor),\r\n                      child: const Text(\r\n                        'Login',\r\n                        style: TextStyle(color: Colors.white, fontSize: 24),\r\n                      ),\r\n                    ),\r\n                    const SizedBox(height: 20),\r\n                    Row(\r\n                      mainAxisAlignment: MainAxisAlignment.center,\r\n                      children: [\r\n                        const Text(\"Don't have account?\"),\r\n                        TextButton(\r\n                          onPressed: () {\r\n                            Get.off(SignupScreen());\r\n                          },\r\n                          child: const Text('Sign up'),\r\n                        ),\r\n                      ],\r\n                    )\r\n                  ],\r\n                ),\r\n              );\r\n            },\r\n          ),\r\n        ),\r\n      ),\r\n    );\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/lib/view/login_screen.dart b/frontend/bazaar_to_go/lib/view/login_screen.dart
+--- a/frontend/bazaar_to_go/lib/view/login_screen.dart	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/lib/view/login_screen.dart	(date 1737099614543)
+@@ -1,13 +1,69 @@
++import 'dart:convert';
++
+ import 'package:bazaar_to_go/controllers/login_controller.dart';
++import 'package:bazaar_to_go/view/register_screen.dart';
+ import 'package:bazaar_to_go/view/signup_screen.dart';
++import 'package:bazaar_to_go/view/splash_screen.dart';
+ import 'package:flutter/material.dart';
+ import 'package:flutter_screenutil/flutter_screenutil.dart';
+ import 'package:get/get.dart';
+ 
++import '../repository/api_service.dart';
++import '../repository/endpoint.dart';
++
+ class LoginScreen extends StatelessWidget {
+   
+-  const LoginScreen({super.key});
+-  
++  LoginScreen({super.key});
++  void _onLogin() async {
++    print(_emailController.text);
++    print(_passwordController.text);
++    try {
++      final response = await ApiService.post(
++        Endpoint.login.getUrl(),
++        {
++          'email': _emailController.text.toString(),
++          'password': _passwordController.text.toString(),
++        } as Map<String, dynamic>,
++      );
++
++      if (response.statusCode == 200) {
++
++        final responseData = jsonDecode(response.body);
++
++        Get.snackbar(
++          'Success',
++          'Login Successful!',
++          snackPosition: SnackPosition.BOTTOM,
++          backgroundColor: Colors.green,
++          colorText: Colors.white,
++        );
++        Get.offAll((RegisterScreen()));
++      } else {
++        print("Login Failed: ${response.statusCode}, ${response.body}");
++        Get.snackbar(
++          'Error',
++          'Login Failed: ${response.body}',
++          snackPosition: SnackPosition.BOTTOM,
++          backgroundColor: Colors.red,
++          colorText: Colors.white,
++        );
++      }
++    } catch (error) {
++      printError(info: error.toString());
++
++      Get.snackbar(
++        'Error',
++        'Login failed. Please try again. \n$Error',
++        snackPosition: SnackPosition.BOTTOM,
++        backgroundColor: Colors.red,
++        colorText: Colors.white,
++      );
++    }
++  }
++
++
++  final TextEditingController _emailController = TextEditingController();
++  final TextEditingController _passwordController = TextEditingController();
+   final Color kDarkBlueColor = const Color(0xFF363AC2);
+   @override
+   Widget build(BuildContext context) {
+@@ -46,6 +102,7 @@
+                           border: const OutlineInputBorder(),
+                           focusedBorder: OutlineInputBorder(
+                               borderSide: BorderSide(color: kDarkBlueColor))),
++                      controller: _emailController,
+                     ),
+                     SizedBox(height: 20.h),
+                     TextFormField(
+@@ -57,6 +114,7 @@
+                           border: const OutlineInputBorder(),
+                           focusedBorder: OutlineInputBorder(
+                               borderSide: BorderSide(color: kDarkBlueColor))),
++                      controller: _passwordController,
+                     ),
+                     const SizedBox(height: 10),
+                     Align(
+@@ -68,7 +126,10 @@
+                     ),
+                     const SizedBox(height: 20),
+                     ElevatedButton(
+-                      onPressed: () {},
++                      onPressed: (){
++                        _onLogin();
++                      }
++                      ,
+                       style: ElevatedButton.styleFrom(
+                           fixedSize: Size(240.w, 48.h),
+                           backgroundColor: kDarkBlueColor),
+Index: frontend/bazaar_to_go/lib/view/on_boarding.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:bazaar_to_go/view/login_screen.dart';\r\nimport 'package:flutter/material.dart';\r\nimport 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';\r\nimport 'package:flutter_screenutil/flutter_screenutil.dart';\r\nimport 'package:get/get.dart';\r\n\r\nclass OnBoarding extends StatelessWidget {\r\n  final Color kDarkBlueColor = const Color(0xFF363AC2);\r\n\r\n  const OnBoarding({super.key});\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return Scaffold(\r\n      backgroundColor: Colors.white,\r\n      body: OnBoardingSlider(\r\n        finishButtonText: 'Get Started',\r\n        onFinish: () {\r\n          Get.to(const LoginScreen());\r\n        },\r\n        finishButtonStyle: FinishButtonStyle(\r\n          backgroundColor: kDarkBlueColor,\r\n          shape: RoundedRectangleBorder(\r\n              borderRadius: BorderRadius.all(Radius.circular(24.r))),\r\n        ),\r\n        trailing: Text(\r\n          \"Login\",\r\n          style: TextStyle(\r\n            fontSize: 16,\r\n            color: kDarkBlueColor,\r\n            fontWeight: FontWeight.w600,\r\n          ),\r\n        ),\r\n        trailingFunction: () {\r\n          Get.to(const LoginScreen());\r\n        },\r\n        skipTextButton: Text(\r\n          'Skip',\r\n          style: TextStyle(\r\n            fontSize: 16,\r\n            color: kDarkBlueColor,\r\n            fontWeight: FontWeight.w600,\r\n          ),\r\n        ),\r\n        controllerColor: kDarkBlueColor,\r\n        totalPage: 3,\r\n        headerBackgroundColor: Colors.white,\r\n        pageBackgroundColor: Colors.white,\r\n        background: [\r\n          Image.asset(\r\n            'assets/images/slide_1.png',\r\n            height: 400,\r\n            width: 300.w,\r\n          ),\r\n          Image.asset(\r\n            'assets/images/slide_2.png',\r\n            height: 400,\r\n            width: 300.w,\r\n          ),\r\n          Image.asset(\r\n            'assets/images/slide_3.png',\r\n            height: 400,\r\n            width: 300.w,\r\n          ),\r\n        ],\r\n        speed: 1.8,\r\n        pageBodies: [\r\n          Container(\r\n            alignment: Alignment.center,\r\n            width: Get.width,\r\n            height: Get.height,\r\n            padding: const EdgeInsets.symmetric(horizontal: 40),\r\n            child: Column(\r\n              mainAxisAlignment: MainAxisAlignment.start,\r\n              crossAxisAlignment: CrossAxisAlignment.center,\r\n              children: <Widget>[\r\n                const SizedBox(\r\n                  height: 480,\r\n                ),\r\n                Text(\r\n                  'Welcome to your \\n Virtual Market',\r\n                  textAlign: TextAlign.center,\r\n                  style: TextStyle(\r\n                    color: kDarkBlueColor,\r\n                    fontSize: 24.0,\r\n                    fontWeight: FontWeight.w600,\r\n                  ),\r\n                ),\r\n                const SizedBox(\r\n                  height: 20,\r\n                ),\r\n                const Text(\r\n                  'Transform Your Local Shop in a thriving online business!',\r\n                  textAlign: TextAlign.center,\r\n                  style: TextStyle(\r\n                    color: Colors.black26,\r\n                    fontSize: 18.0,\r\n                    fontWeight: FontWeight.w600,\r\n                  ),\r\n                ),\r\n              ],\r\n            ),\r\n          ),\r\n          Container(\r\n            alignment: Alignment.center,\r\n            width: MediaQuery.of(context).size.width,\r\n            padding: const EdgeInsets.symmetric(horizontal: 40),\r\n            child: Column(\r\n              mainAxisAlignment: MainAxisAlignment.start,\r\n              crossAxisAlignment: CrossAxisAlignment.center,\r\n              children: <Widget>[\r\n                const SizedBox(\r\n                  height: 480,\r\n                ),\r\n                Text(\r\n                  'Streamline \\n Order Management',\r\n                  textAlign: TextAlign.center,\r\n                  style: TextStyle(\r\n                    color: kDarkBlueColor,\r\n                    fontSize: 24.0,\r\n                    fontWeight: FontWeight.w600,\r\n                  ),\r\n                ),\r\n                const SizedBox(\r\n                  height: 20,\r\n                ),\r\n                const Text(\r\n                  'Easily manage orders and inventory from one intututive platform',\r\n                  textAlign: TextAlign.center,\r\n                  style: TextStyle(\r\n                    color: Colors.black26,\r\n                    fontSize: 18.0,\r\n                    fontWeight: FontWeight.w600,\r\n                  ),\r\n                ),\r\n              ],\r\n            ),\r\n          ),\r\n          Container(\r\n            alignment: Alignment.center,\r\n            width: MediaQuery.of(context).size.width,\r\n            padding: const EdgeInsets.symmetric(horizontal: 40),\r\n            child: Column(\r\n              mainAxisAlignment: MainAxisAlignment.start,\r\n              crossAxisAlignment: CrossAxisAlignment.center,\r\n              children: <Widget>[\r\n                const SizedBox(\r\n                  height: 480,\r\n                ),\r\n                Text(\r\n                  'AI Powered \\n Product Description Writer',\r\n                  textAlign: TextAlign.center,\r\n                  style: TextStyle(\r\n                    color: kDarkBlueColor,\r\n                    fontSize: 24.0,\r\n                    fontWeight: FontWeight.w600,\r\n                  ),\r\n                ),\r\n                const SizedBox(\r\n                  height: 20,\r\n                ),\r\n                const Text(\r\n                  'Leverage power of our AI for writing fast and quick product description ',\r\n                  textAlign: TextAlign.center,\r\n                  style: TextStyle(\r\n                    color: Colors.black26,\r\n                    fontSize: 18.0,\r\n                    fontWeight: FontWeight.w600,\r\n                  ),\r\n                ),\r\n              ],\r\n            ),\r\n          ),\r\n        ],\r\n      ),\r\n    );\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/lib/view/on_boarding.dart b/frontend/bazaar_to_go/lib/view/on_boarding.dart
+--- a/frontend/bazaar_to_go/lib/view/on_boarding.dart	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/lib/view/on_boarding.dart	(date 1737099247654)
+@@ -16,7 +16,7 @@
+       body: OnBoardingSlider(
+         finishButtonText: 'Get Started',
+         onFinish: () {
+-          Get.to(const LoginScreen());
++          Get.to( LoginScreen());
+         },
+         finishButtonStyle: FinishButtonStyle(
+           backgroundColor: kDarkBlueColor,
+@@ -32,7 +32,7 @@
+           ),
+         ),
+         trailingFunction: () {
+-          Get.to(const LoginScreen());
++          Get.to( LoginScreen());
+         },
+         skipTextButton: Text(
+           'Skip',
+Index: frontend/bazaar_to_go/lib/view/register_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:bazaar_to_go/viewmodel/register_viewmodel.dart';\r\nimport 'package:bazaar_to_go/controllers/registration_controller.dart';\r\nimport 'package:bazaar_to_go/model/add_details.dart';\r\nimport 'package:flutter/material.dart';\r\nimport 'package:flutter_screenutil/flutter_screenutil.dart';\r\nimport 'package:intl/intl.dart';\r\nimport 'package:flutter_form_builder/flutter_form_builder.dart';\r\nimport 'package:form_builder_validators/form_builder_validators.dart';\r\nimport 'package:get/get.dart';\r\n\r\nclass RegisterScreen extends StatefulWidget {\r\n  const RegisterScreen({super.key});\r\n\r\n  @override\r\n  State<RegisterScreen> createState() => StateRegisterScreen();\r\n}\r\n\r\nclass StateRegisterScreen extends State<RegisterScreen> {\r\n  final Color kDarkBlueColor = const Color(0xFF363AC2);\r\n  final _formKey = GlobalKey<FormBuilderState>();\r\n  final RegistrationController controller = Get.put(RegistrationController());\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return Scaffold(\r\n      appBar: AppBar(\r\n          backgroundColor: kDarkBlueColor,\r\n          leading: Padding(\r\n            padding: const EdgeInsets.only(left: 20.0),\r\n            child: Image.asset(\r\n              \"assets/images/cart_logo.png\",\r\n              colorBlendMode: BlendMode.colorDodge,\r\n            ),\r\n          ),\r\n          title: const Text(\"Seller Registration\",\r\n              style: TextStyle(\r\n                  fontSize: 24,\r\n                  fontWeight: FontWeight.bold,\r\n                  color: Colors.white))),\r\n      backgroundColor: Colors.white,\r\n      body: SingleChildScrollView(\r\n        child: Padding(\r\n          padding: const EdgeInsets.all(20.0),\r\n          child: Column(\r\n            children: [\r\n              FormBuilder(\r\n                  key: _formKey,\r\n                  autovalidateMode: AutovalidateMode.disabled,\r\n                  onChanged: () {\r\n                    _formKey.currentState!.save();\r\n                  },\r\n                  skipDisabled: true,\r\n                  child: Column(\r\n                    children: [\r\n                      const Text(\r\n                        \"Personal Details\",\r\n                        style: TextStyle(\r\n                            fontSize: 20, fontWeight: FontWeight.w600),\r\n                      ),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      buildtextfield(\r\n                          name: \"name\",\r\n                          label: \"Full Name(as per PAN)\",\r\n                          hasError: controller.namehaserror),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      FormBuilderDateTimePicker(\r\n                        name: 'date_of_birth',\r\n                        firstDate: DateTime(1970),\r\n                        inputType: InputType.date,\r\n                        format: DateFormat('yyyy-MM-dd'),\r\n                        decoration: InputDecoration(\r\n                          filled: true,\r\n                          fillColor: Color.fromARGB(255, 243, 245, 245),\r\n                          labelText: 'Date of Birth',\r\n                          hintText: 'Date(YYYY/MM/DD)',\r\n                          suffixIcon: IconButton(\r\n                            icon: const Icon(Icons.close),\r\n                            onPressed: () {\r\n                              _formKey.currentState!.fields['date_range']\r\n                                  ?.didChange(null);\r\n                            },\r\n                          ),\r\n                        ),\r\n                      ),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      FormBuilderTextField(\r\n                        autovalidateMode: AutovalidateMode.onUnfocus,\r\n                        name: 'phone',\r\n                        decoration: InputDecoration(\r\n                          labelText: 'Phone No (WhatsApp)',\r\n                          filled: true,\r\n                          fillColor: Color.fromARGB(255, 243, 245, 245),\r\n                          suffixIcon: controller.phonehaserror.value\r\n                              ? const Icon(Icons.error, color: Colors.red)\r\n                              : null,\r\n                        ),\r\n                        validator: FormBuilderValidators.compose([\r\n                          FormBuilderValidators.required(),\r\n                          FormBuilderValidators.numeric(),\r\n                          FormBuilderValidators.equalLength(10),\r\n                        ]),\r\n                        keyboardType: TextInputType.number,\r\n                        textInputAction: TextInputAction.next,\r\n                      ),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      const Text(\r\n                        \"Address\",\r\n                        style: TextStyle(\r\n                            fontSize: 20, fontWeight: FontWeight.w600),\r\n                      ),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      FormBuilderTextField(\r\n                        autovalidateMode: AutovalidateMode.onUnfocus,\r\n                        name: 'pincode',\r\n                        decoration: InputDecoration(\r\n                          labelText: 'Pincode',\r\n                          filled: true,\r\n                          fillColor: Color.fromARGB(255, 243, 245, 245),\r\n                          suffixIcon: controller.pinhaserror.value\r\n                              ? const Icon(Icons.error, color: Colors.red)\r\n                              : null,\r\n                        ),\r\n                        onChanged: (value) async {\r\n                          List<PostOffice>? list =\r\n                              await RegisterViewmodel.fetchPostOffices(\r\n                                  value.toString());\r\n                          if (list != null && list.isNotEmpty) {\r\n                            _formKey.currentState?.patchValue({\r\n                              'district': list[0].district,\r\n                              'state': list[0].state,\r\n                            });\r\n                          }\r\n                        },\r\n                        validator: FormBuilderValidators.compose([\r\n                          FormBuilderValidators.required(),\r\n                          FormBuilderValidators.numeric(),\r\n                          FormBuilderValidators.equalLength(6),\r\n                        ]),\r\n                        keyboardType: TextInputType.number,\r\n                        textInputAction: TextInputAction.next,\r\n                      ),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      buildtextfield(\r\n                          name: \"city\",\r\n                          label: \"Street/Locality\",\r\n                          hasError: controller.cityhaserror),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      buildtextfield(\r\n                          name: \"district\",\r\n                          label: \"District\",\r\n                          hasError: controller.cityhaserror),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      buildtextfield(\r\n                          name: \"state\",\r\n                          label: \"State\",\r\n                          hasError: controller.statehaserror),\r\n                      SizedBox(\r\n                        height: 10,\r\n                      ),\r\n                      Divider(),\r\n                      SizedBox(\r\n                        height: 15,\r\n                      ),\r\n                      const Text(\r\n                        \"Seller Account Details\",\r\n                        style: TextStyle(\r\n                            fontSize: 20, fontWeight: FontWeight.w600),\r\n                      ),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      buildtextfield(\r\n                          name: \"aadhar\",\r\n                          label: \"Aadhar\",\r\n                          reqlength: 12,\r\n                          hasError: controller.aadharhaserror),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      buildtextfield(\r\n                          name: \"gstin\",\r\n                          label: \"GSTIN\",\r\n                          reqlength: 15,\r\n                          hasError: controller.gstinhaserror),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      buildtextfield(\r\n                          name: \"pan\",\r\n                          label: \"Pan Card Number\",\r\n                          reqlength: 10,\r\n                          hasError: controller.panhaserror),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      buildtextfield(\r\n                          name: \"bankaccount\",\r\n                          label: \"Bank Account Number\",\r\n                          hasError: controller.accounthaserror),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      const Text(\r\n                        \"Upload Documents\",\r\n                        style: TextStyle(\r\n                            fontSize: 20, fontWeight: FontWeight.w600),\r\n                      ),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      ElevatedButton(\r\n                          onPressed: () async {\r\n                            controller.updatePanLoading();\r\n                            controller.panUrl =\r\n                                (await controller.handleImageSelection())\r\n                                    .toString();\r\n                            controller.updatePanLoading();\r\n                          },\r\n                          style: ElevatedButton.styleFrom(\r\n                              fixedSize: Size(240.w, 48.h),\r\n                              backgroundColor: kDarkBlueColor),\r\n                          child: Obx(\r\n                            () => controller.panloading.value\r\n                                ? SizedBox(\r\n                                    height: 15,\r\n                                    width: 15,\r\n                                    child: CircularProgressIndicator(),\r\n                                  )\r\n                                : Text(\r\n                                    'Upload PAN',\r\n                                    style: TextStyle(\r\n                                        color: Colors.white, fontSize: 20),\r\n                                  ),\r\n                          )),\r\n                      SizedBox(\r\n                        height: 10,\r\n                      ),\r\n                      ElevatedButton(\r\n                          onPressed: () async {\r\n                            controller.updateSelfLoading();\r\n                            controller.selfUrl =\r\n                                (await controller.handleImageSelection())\r\n                                    .toString();\r\n                            controller.updateSelfLoading();\r\n                          },\r\n                          style: ElevatedButton.styleFrom(\r\n                              fixedSize: Size(240.w, 48.h),\r\n                              backgroundColor: kDarkBlueColor),\r\n                          child: Obx(\r\n                            () => controller.selfloading.value\r\n                                ? SizedBox(\r\n                                    height: 15,\r\n                                    width: 15,\r\n                                    child: CircularProgressIndicator(),\r\n                                  )\r\n                                : Text(\r\n                                    'Upload selfie',\r\n                                    style: TextStyle(\r\n                                        color: Colors.white, fontSize: 20),\r\n                                  ),\r\n                          )),\r\n                      SizedBox(\r\n                        height: 20,\r\n                      ),\r\n                      FormBuilderCheckbox(\r\n                          name: \"terms\",\r\n                          title: Text(\"I accept terms and conditions\")),\r\n                      FormBuilderCheckbox(\r\n                          name: \"privacy\",\r\n                          title: Text(\"I accept privacy policy\")),\r\n                      SizedBox(\r\n                        height: 10,\r\n                      ),\r\n                      ElevatedButton(\r\n                        onPressed: () {\r\n                          if (_formKey.currentState!.fields['terms']?.value ==\r\n                                  true &&\r\n                              _formKey.currentState!.fields['privacy']?.value ==\r\n                                  true) {\r\n                            // Create a new mutable map from the unmodifiable map\r\n                            Map<String, dynamic> field =\r\n                                Map.from(_formKey.currentState!.value);\r\n\r\n                            // Now you can safely modify the new map\r\n                            field.addAll({\r\n                              \"panUrl\": controller.panUrl,\r\n                              \"selfUrl\": controller.selfUrl,\r\n                            });\r\n\r\n                            print(field.toString());\r\n                          } else {\r\n                            Get.snackbar(\"Message\",\"Kindly accept terms and conditions\");\r\n                          }\r\n                        },\r\n                        style: ElevatedButton.styleFrom(\r\n                            fixedSize: Size(240.w, 48.h),\r\n                            backgroundColor: kDarkBlueColor),\r\n                        child: const Text(\r\n                          'Register',\r\n                          style: TextStyle(color: Colors.white, fontSize: 20),\r\n                        ),\r\n                      ),\r\n                    ],\r\n                  ))\r\n            ],\r\n          ),\r\n        ),\r\n      ),\r\n    );\r\n  }\r\n\r\n  Widget buildtextfield(\r\n      {required String name,\r\n      required String label,\r\n      required Rx<bool> hasError,\r\n      int? reqlength}) {\r\n    return FormBuilderTextField(\r\n      autovalidateMode: AutovalidateMode.onUnfocus,\r\n      name: name,\r\n      decoration: InputDecoration(\r\n        fillColor: Color.fromARGB(255, 243, 245, 245),\r\n        filled: true,\r\n        labelText: label,\r\n        suffixIcon:\r\n            hasError.value ? const Icon(Icons.error, color: Colors.red) : null,\r\n      ),\r\n      validator: FormBuilderValidators.compose([\r\n        FormBuilderValidators.required(),\r\n        if (reqlength != null) FormBuilderValidators.equalLength(reqlength),\r\n      ]),\r\n      // initialValue: '12',\r\n      keyboardType: TextInputType.text,\r\n      textInputAction: TextInputAction.done,\r\n    );\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/lib/view/register_screen.dart b/frontend/bazaar_to_go/lib/view/register_screen.dart
+--- a/frontend/bazaar_to_go/lib/view/register_screen.dart	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/lib/view/register_screen.dart	(date 1737114015451)
+@@ -9,7 +9,7 @@
+ import 'package:get/get.dart';
+ 
+ class RegisterScreen extends StatefulWidget {
+-  const RegisterScreen({super.key});
++ RegisterScreen({super.key});
+ 
+   @override
+   State<RegisterScreen> createState() => StateRegisterScreen();
+@@ -67,7 +67,7 @@
+                         height: 20,
+                       ),
+                       FormBuilderDateTimePicker(
+-                        name: 'date_of_birth',
++                        name: 'dob',
+                         firstDate: DateTime(1970),
+                         inputType: InputType.date,
+                         format: DateFormat('yyyy-MM-dd'),
+@@ -332,6 +332,8 @@
+     return FormBuilderTextField(
+       autovalidateMode: AutovalidateMode.onUnfocus,
+       name: name,
++        controller:TextEditingController(
++            text: controller.name.value),
+       decoration: InputDecoration(
+         fillColor: Color.fromARGB(255, 243, 245, 245),
+         filled: true,
+@@ -347,5 +349,6 @@
+       keyboardType: TextInputType.text,
+       textInputAction: TextInputAction.done,
+     );
++
+   }
+ }
+Index: frontend/bazaar_to_go/lib/view/signup_screen.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:bazaar_to_go/controllers/signup_controller.dart';\r\nimport 'package:bazaar_to_go/view/login_screen.dart';\r\nimport 'package:flutter/cupertino.dart';\r\nimport 'package:flutter/material.dart';\r\nimport 'package:flutter_screenutil/flutter_screenutil.dart';\r\nimport 'package:get/get.dart';\r\n\r\nclass SignupScreen extends StatelessWidget {\r\n  const SignupScreen({super.key});\r\n  final Color kDarkBlueColor = const Color(0xFF363AC2);\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    final controller = Get.put(SignupController());\r\n    return Scaffold(\r\n      backgroundColor: Colors.white,\r\n      body: SafeArea(\r\n        child: SingleChildScrollView(\r\n          child: OrientationBuilder(\r\n            builder: (context, orientation) {\r\n              return SingleChildScrollView(\r\n                child: Padding(\r\n                  padding: const EdgeInsets.all(16.0),\r\n                  child: Column(\r\n                    crossAxisAlignment: CrossAxisAlignment.stretch,\r\n                    children: [\r\n                      SizedBox(\r\n                        height: 360.h,\r\n                        width: 320.w,\r\n                        child: Image.asset(\r\n                          'assets/images/login_image.png',\r\n                          fit: BoxFit.cover,\r\n                        ),\r\n                      ),\r\n                      const SizedBox(height: 20),\r\n                      const Text(\r\n                        'Sign Up',\r\n                        style: TextStyle(\r\n                            fontSize: 30, fontWeight: FontWeight.bold),\r\n                        textAlign: TextAlign.center,\r\n                      ),\r\n                      SizedBox(height: 25.h),\r\n                      TextFormField(\r\n                        decoration: InputDecoration(\r\n                            labelText: 'Username',\r\n                            prefixIcon:\r\n                                const Icon(CupertinoIcons.person_alt_circle),\r\n                            border: const OutlineInputBorder(),\r\n                            focusedBorder: OutlineInputBorder(\r\n                                borderSide: BorderSide(color: kDarkBlueColor))),\r\n                      ),\r\n                      SizedBox(height: 20.h),\r\n                      TextFormField(\r\n                        decoration: InputDecoration(\r\n                            labelText: 'Email',\r\n                            prefixIcon: const Icon(Icons.email),\r\n                            border: const OutlineInputBorder(),\r\n                            focusedBorder: OutlineInputBorder(\r\n                                borderSide: BorderSide(color: kDarkBlueColor))),\r\n                      ),\r\n                      SizedBox(height: 20.h),\r\n                      TextFormField(\r\n                        obscureText: true,\r\n                        decoration: InputDecoration(\r\n                            labelText: 'Password',\r\n                            prefixIcon: const Icon(Icons.lock),\r\n                            suffixIcon: Obx(\r\n                              () => IconButton(\r\n                                  onPressed: () => controller.togglePassword,\r\n                                  icon: !controller.showPassword.value\r\n                                      ? const Icon(Icons.visibility)\r\n                                      : const Icon(Icons.visibility_off)),\r\n                            ),\r\n                            border: const OutlineInputBorder(),\r\n                            focusedBorder: OutlineInputBorder(\r\n                                borderSide: BorderSide(color: kDarkBlueColor))),\r\n                      ),\r\n                      SizedBox(height: 20.h),\r\n                      ElevatedButton(\r\n                        onPressed: () {},\r\n                        style: ElevatedButton.styleFrom(\r\n                            fixedSize: Size(240.w, 48.h),\r\n                            backgroundColor: kDarkBlueColor),\r\n                        child: const Text(\r\n                          'Sign Up',\r\n                          style: TextStyle(color: Colors.white, fontSize: 24),\r\n                        ),\r\n                      ),\r\n                      const SizedBox(height: 20),\r\n                      Row(\r\n                        mainAxisAlignment: MainAxisAlignment.center,\r\n                        children: [\r\n                          const Text(\"Already have account?\"),\r\n                          TextButton(\r\n                            onPressed: () {\r\n                              Get.off(const LoginScreen());\r\n                            },\r\n                            child: const Text('Login'),\r\n                          ),\r\n                        ],\r\n                      )\r\n                    ],\r\n                  ),\r\n                ),\r\n              );\r\n            },\r\n          ),\r\n        ),\r\n      ),\r\n    );\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/lib/view/signup_screen.dart b/frontend/bazaar_to_go/lib/view/signup_screen.dart
+--- a/frontend/bazaar_to_go/lib/view/signup_screen.dart	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/lib/view/signup_screen.dart	(date 1737099247661)
+@@ -1,13 +1,70 @@
++import 'dart:convert';
++
+ import 'package:bazaar_to_go/controllers/signup_controller.dart';
++import 'package:bazaar_to_go/repository/api_service.dart';
++import 'package:bazaar_to_go/repository/endpoint.dart';
+ import 'package:bazaar_to_go/view/login_screen.dart';
++import 'package:bazaar_to_go/view/splash_screen.dart';
+ import 'package:flutter/cupertino.dart';
+ import 'package:flutter/material.dart';
+ import 'package:flutter_screenutil/flutter_screenutil.dart';
+ import 'package:get/get.dart';
++import 'package:http/http.dart';
+ 
+ class SignupScreen extends StatelessWidget {
+-  const SignupScreen({super.key});
++  void _onSignup() async {
++    print(_username.text);
++    print(_emailController.text);
++    print(_passwordController.text);
++    try {
++      final response = await ApiService.post(
++        Endpoint.signUp.getUrl(),
++        {
++          'username': _username.text.toString(),
++          'email': _emailController.text.toString(),
++          'password': _passwordController.text.toString()
++        }as Map<String, dynamic>,
++      );
++
++      if (response.statusCode == 201 || response.statusCode == 200) {
++        Get.snackbar(
++          'Success',
++          'Signup Successful!',
++          snackPosition: SnackPosition.BOTTOM,
++          backgroundColor: Colors.green,
++          colorText: Colors.white,
++        );
++
++
++        Get.offAll(SplashScreen());
++      } else {
++        print("Signup Failed: ${response.statusCode}, ${response.body}");
++        Get.snackbar(
++          'Error',
++          'Signup Failed: ${response.body}',
++          snackPosition: SnackPosition.BOTTOM,
++          backgroundColor: Colors.red,
++          colorText: Colors.white,
++        );
++      }
++    } catch (error) {
++      printError(info: error.toString());
++
++      Get.snackbar(
++        'Error',
++        'Signup failed. Please try again. \n$Error',
++        snackPosition: SnackPosition.BOTTOM,
++        backgroundColor: Colors.red,
++        colorText: Colors.white,
++      );
++    }
++  }
++
++  SignupScreen({super.key});
+   final Color kDarkBlueColor = const Color(0xFF363AC2);
++   final TextEditingController _username = TextEditingController();
++  final TextEditingController _emailController = TextEditingController();
++  final TextEditingController _passwordController = TextEditingController();
+   @override
+   Widget build(BuildContext context) {
+     final controller = Get.put(SignupController());
+@@ -46,7 +103,9 @@
+                                 const Icon(CupertinoIcons.person_alt_circle),
+                             border: const OutlineInputBorder(),
+                             focusedBorder: OutlineInputBorder(
+-                                borderSide: BorderSide(color: kDarkBlueColor))),
++                                borderSide: BorderSide(color: kDarkBlueColor))
++                        ),
++                        controller: _username,
+                       ),
+                       SizedBox(height: 20.h),
+                       TextFormField(
+@@ -56,6 +115,7 @@
+                             border: const OutlineInputBorder(),
+                             focusedBorder: OutlineInputBorder(
+                                 borderSide: BorderSide(color: kDarkBlueColor))),
++                        controller: _emailController,
+                       ),
+                       SizedBox(height: 20.h),
+                       TextFormField(
+@@ -73,10 +133,13 @@
+                             border: const OutlineInputBorder(),
+                             focusedBorder: OutlineInputBorder(
+                                 borderSide: BorderSide(color: kDarkBlueColor))),
++                        controller: _passwordController,
+                       ),
+                       SizedBox(height: 20.h),
+                       ElevatedButton(
+-                        onPressed: () {},
++                        onPressed: () {
++                          _onSignup();
++                        },
+                         style: ElevatedButton.styleFrom(
+                             fixedSize: Size(240.w, 48.h),
+                             backgroundColor: kDarkBlueColor),
+@@ -92,7 +155,7 @@
+                           const Text("Already have account?"),
+                           TextButton(
+                             onPressed: () {
+-                              Get.off(const LoginScreen());
++                              Get.off(LoginScreen());
+                             },
+                             child: const Text('Login'),
+                           ),
+Index: frontend/bazaar_to_go/lib/viewmodel/register_viewmodel.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'dart:convert';\r\n\r\nimport 'package:bazaar_to_go/model/add_details.dart';\r\nimport 'package:bazaar_to_go/repository/endpoint.dart';\r\nimport 'package:get/get.dart';\r\nimport 'package:http/http.dart' as http;\r\n\r\nimport '../repository/api_service.dart';\r\n\r\nclass RegisterViewmodel {\r\n  static Future<List<PostOffice>?> fetchPostOffices(String postalCode) async {\r\n    if (postalCode.isNotEmpty && postalCode.length == 6) {\r\n      try {\r\n        final http.Response response =\r\n            await ApiService().get(Endpoint.getAddress, postalCode);\r\n\r\n        if (response.statusCode == 200) {\r\n          try {\r\n            final decodedJson = jsonDecode(response.body);\r\n\r\n            // Check if the response contains 'PostOffice' key and it is a list\r\n            if (decodedJson.containsKey('PostOffice') &&\r\n                decodedJson['PostOffice'] is List) {\r\n              final List<dynamic> postOfficeJsonList =\r\n                  decodedJson['PostOffice'];\r\n              return postOfficeJsonList\r\n                  .map((json) => PostOffice.fromJson(json))\r\n                  .toList();\r\n            } else {\r\n              Get.snackbar(\"Error\", \"Invalid pin code\");\r\n              return null;\r\n            }\r\n          } catch (e) {\r\n            print(e.toString());\r\n            return null;\r\n          }\r\n        } else {\r\n          return null;\r\n        }\r\n      } catch (e) {\r\n        return null;\r\n      }\r\n    }\r\n    return null;\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/lib/viewmodel/register_viewmodel.dart b/frontend/bazaar_to_go/lib/viewmodel/register_viewmodel.dart
+--- a/frontend/bazaar_to_go/lib/viewmodel/register_viewmodel.dart	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/lib/viewmodel/register_viewmodel.dart	(date 1737099042919)
+@@ -12,7 +12,7 @@
+     if (postalCode.isNotEmpty && postalCode.length == 6) {
+       try {
+         final http.Response response =
+-            await ApiService().get(Endpoint.getAddress, postalCode);
++            await ApiService.get(Endpoint.getAddress, postalCode);
+ 
+         if (response.statusCode == 200) {
+           try {
+Index: frontend/bazaar_to_go/pubspec.yaml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>name: bazaar_to_go\r\ndescription: \"A new Flutter project.\"\r\n# The following line prevents the package from being accidentally published to\r\n# pub.dev using `flutter pub publish`. This is preferred for private packages.\r\npublish_to: 'none' # Remove this line if you wish to publish to pub.dev\r\n\r\n# The following defines the version and build number for your application.\r\n# A version number is three numbers separated by dots, like 1.2.43\r\n# followed by an optional build number separated by a +.\r\n# Both the version and the builder number may be overridden in flutter\r\n# build by specifying --build-name and --build-number, respectively.\r\n# In Android, build-name is used as versionName while build-number used as versionCode.\r\n# Read more about Android versioning at https://developer.android.com/studio/publish/versioning\r\n# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.\r\n# Read more about iOS versioning at\r\n# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html\r\n# In Windows, build-name is used as the major, minor, and patch parts\r\n# of the product and file versions while build-number is used as the build suffix.\r\nversion: 1.0.0+1\r\n\r\nenvironment:\r\n  sdk: ^3.5.3\r\n\r\n# Dependencies specify other packages that your package needs in order to work.\r\n# To automatically upgrade your package dependencies to the latest versions\r\n# consider running `flutter pub upgrade --major-versions`. Alternatively,\r\n# dependencies can be manually updated by changing the version numbers below to\r\n# the latest version available on pub.dev. To see which dependencies have newer\r\n# versions available, run `flutter pub outdated`.\r\ndependencies:\r\n  flutter:\r\n    sdk: flutter\r\n\r\n\r\n  # The following adds the Cupertino Icons font to your application.\r\n  # Use with the CupertinoIcons class for iOS style icons.\r\n  cupertino_icons: ^1.0.8\r\n  get: ^4.6.6\r\n  flutter_screenutil: ^5.9.3\r\n  flutter_onboarding_slider: ^1.0.11\r\n  flutter_form_builder: ^9.5.0\r\n  form_builder_validators: ^11.0.0\r\n  intl: ^0.19.0\r\n  http: ^1.2.2\r\n  cloudinary_api: ^1.0.0\r\n  cloudinary_url_gen: ^1.0.0\r\n  flutter_dotenv: ^5.2.1\r\n  image_picker: ^1.1.2\r\n\r\ndev_dependencies:\r\n  flutter_test:\r\n    sdk: flutter\r\n\r\n  # The \"flutter_lints\" package below contains a set of recommended lints to\r\n  # encourage good coding practices. The lint set provided by the package is\r\n  # activated in the `analysis_options.yaml` file located at the root of your\r\n  # package. See that file for information about deactivating specific lint\r\n  # rules and activating additional ones.\r\n  flutter_lints: ^4.0.0\r\n\r\n# For information on the generic Dart part of this file, see the\r\n# following page: https://dart.dev/tools/pub/pubspec\r\n\r\n# The following section is specific to Flutter packages.\r\nflutter:\r\n\r\n  # The following line ensures that the Material Icons font is\r\n  # included with your application, so that you can use the icons in\r\n  # the material Icons class.\r\n  uses-material-design: true\r\n\r\n  # To add assets to your application, add an assets section, like this:\r\n  assets:\r\n    - assets/images/logo.png\r\n    - assets/images/cart_logo.png\r\n    - assets/images/ondc.png\r\n    - assets/images/slide_1.png\r\n    - assets/images/slide_2.png\r\n    - assets/images/slide_3.png\r\n    - assets/images/login_image.png\r\n    - .env\r\n  # An image asset can refer to one or more resolution-specific \"variants\", see\r\n  # https://flutter.dev/to/resolution-aware-images\r\n\r\n  # For details regarding adding assets from package dependencies, see\r\n  # https://flutter.dev/to/asset-from-package\r\n\r\n  # To add custom fonts to your application, add a fonts section here,\r\n  # in this \"flutter\" section. Each entry in this list should have a\r\n  # \"family\" key with the font family name, and a \"fonts\" key with a\r\n  # list giving the asset and other descriptors for the font. For\r\n  # example:\r\n  # fonts:\r\n  #   - family: Schyler\r\n  #     fonts:\r\n  #       - asset: fonts/Schyler-Regular.ttf\r\n  #       - asset: fonts/Schyler-Italic.ttf\r\n  #         style: italic\r\n  #   - family: Trajan Pro\r\n  #     fonts:\r\n  #       - asset: fonts/TrajanPro.ttf\r\n  #       - asset: fonts/TrajanPro_Bold.ttf\r\n  #         weight: 700\r\n  #\r\n  # For details regarding fonts from package dependencies,\r\n  # see https://flutter.dev/to/font-from-package\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/pubspec.yaml b/frontend/bazaar_to_go/pubspec.yaml
+--- a/frontend/bazaar_to_go/pubspec.yaml	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/pubspec.yaml	(date 1737077950864)
+@@ -56,7 +56,7 @@
+   # activated in the `analysis_options.yaml` file located at the root of your
+   # package. See that file for information about deactivating specific lint
+   # rules and activating additional ones.
+-  flutter_lints: ^4.0.0
++  flutter_lints: ^5.0.0
+ 
+ # For information on the generic Dart part of this file, see the
+ # following page: https://dart.dev/tools/pub/pubspec
+Index: frontend/bazaar_to_go/pubspec.lock
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># Generated by pub\r\n# See https://dart.dev/tools/pub/glossary#lockfile\r\npackages:\r\n  async:\r\n    dependency: transitive\r\n    description:\r\n      name: async\r\n      sha256: \"947bfcf187f74dbc5e146c9eb9c0f10c9f8b30743e341481c1e2ed3ecc18c20c\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.11.0\"\r\n  boolean_selector:\r\n    dependency: transitive\r\n    description:\r\n      name: boolean_selector\r\n      sha256: \"6cfb5af12253eaf2b368f07bacc5a80d1301a071c73360d746b7f2e32d762c66\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.1\"\r\n  characters:\r\n    dependency: transitive\r\n    description:\r\n      name: characters\r\n      sha256: \"04a925763edad70e8443c99234dc3328f442e811f1d8fd1a72f1c8ad0f69a605\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.3.0\"\r\n  clock:\r\n    dependency: transitive\r\n    description:\r\n      name: clock\r\n      sha256: cb6d7f03e1de671e34607e909a7213e31d7752be4fb66a86d29fe1eb14bfb5cf\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.1.1\"\r\n  cloudinary_api:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: cloudinary_api\r\n      sha256: a2cd36ddb96f17a310b6e32d2831698669643a79f19068b5f44c464d68b4973b\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.0.2\"\r\n  cloudinary_url_gen:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: cloudinary_url_gen\r\n      sha256: d79558bcb845eedc0e7e7b2a2b06049ce625a590a15eb4fb0630759ec102a732\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.6.0\"\r\n  collection:\r\n    dependency: transitive\r\n    description:\r\n      name: collection\r\n      sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.18.0\"\r\n  convert:\r\n    dependency: transitive\r\n    description:\r\n      name: convert\r\n      sha256: b30acd5944035672bc15c6b7a8b47d773e41e2f17de064350988c5d02adb1c68\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"3.1.2\"\r\n  cross_file:\r\n    dependency: transitive\r\n    description:\r\n      name: cross_file\r\n      sha256: \"7caf6a750a0c04effbb52a676dce9a4a592e10ad35c34d6d2d0e4811160d5670\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.3.4+2\"\r\n  crypto:\r\n    dependency: transitive\r\n    description:\r\n      name: crypto\r\n      sha256: \"1e445881f28f22d6140f181e07737b22f1e099a5e1ff94b0af2f9e4a463f4855\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"3.0.6\"\r\n  cupertino_icons:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: cupertino_icons\r\n      sha256: ba631d1c7f7bef6b729a622b7b752645a2d076dba9976925b8f25725a30e1ee6\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.0.8\"\r\n  fake_async:\r\n    dependency: transitive\r\n    description:\r\n      name: fake_async\r\n      sha256: \"511392330127add0b769b75a987850d136345d9227c6b94c96a04cf4a391bf78\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.3.1\"\r\n  file_selector_linux:\r\n    dependency: transitive\r\n    description:\r\n      name: file_selector_linux\r\n      sha256: \"54cbbd957e1156d29548c7d9b9ec0c0ebb6de0a90452198683a7d23aed617a33\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.9.3+2\"\r\n  file_selector_macos:\r\n    dependency: transitive\r\n    description:\r\n      name: file_selector_macos\r\n      sha256: \"271ab9986df0c135d45c3cdb6bd0faa5db6f4976d3e4b437cf7d0f258d941bfc\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.9.4+2\"\r\n  file_selector_platform_interface:\r\n    dependency: transitive\r\n    description:\r\n      name: file_selector_platform_interface\r\n      sha256: a3994c26f10378a039faa11de174d7b78eb8f79e4dd0af2a451410c1a5c3f66b\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.6.2\"\r\n  file_selector_windows:\r\n    dependency: transitive\r\n    description:\r\n      name: file_selector_windows\r\n      sha256: \"8f5d2f6590d51ecd9179ba39c64f722edc15226cc93dcc8698466ad36a4a85a4\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.9.3+3\"\r\n  flutter:\r\n    dependency: \"direct main\"\r\n    description: flutter\r\n    source: sdk\r\n    version: \"0.0.0\"\r\n  flutter_dotenv:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: flutter_dotenv\r\n      sha256: b7c7be5cd9f6ef7a78429cabd2774d3c4af50e79cb2b7593e3d5d763ef95c61b\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"5.2.1\"\r\n  flutter_form_builder:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: flutter_form_builder\r\n      sha256: c278ef69b08957d484f83413f0e77b656a39b7a7bb4eb8a295da3a820ecc6545\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"9.5.0\"\r\n  flutter_lints:\r\n    dependency: \"direct dev\"\r\n    description:\r\n      name: flutter_lints\r\n      sha256: \"3f41d009ba7172d5ff9be5f6e6e6abb4300e263aab8866d2a0842ed2a70f8f0c\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"4.0.0\"\r\n  flutter_localizations:\r\n    dependency: transitive\r\n    description: flutter\r\n    source: sdk\r\n    version: \"0.0.0\"\r\n  flutter_onboarding_slider:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: flutter_onboarding_slider\r\n      sha256: \"70d6b7c8d469abb31f66fd80c61915d7ff9c05d2c9001ec7db659702e7bc4f9d\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.0.11\"\r\n  flutter_plugin_android_lifecycle:\r\n    dependency: transitive\r\n    description:\r\n      name: flutter_plugin_android_lifecycle\r\n      sha256: \"615a505aef59b151b46bbeef55b36ce2b6ed299d160c51d84281946f0aa0ce0e\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.0.24\"\r\n  flutter_screenutil:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: flutter_screenutil\r\n      sha256: \"8239210dd68bee6b0577aa4a090890342d04a136ce1c81f98ee513fc0ce891de\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"5.9.3\"\r\n  flutter_test:\r\n    dependency: \"direct dev\"\r\n    description: flutter\r\n    source: sdk\r\n    version: \"0.0.0\"\r\n  flutter_web_plugins:\r\n    dependency: transitive\r\n    description: flutter\r\n    source: sdk\r\n    version: \"0.0.0\"\r\n  form_builder_validators:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: form_builder_validators\r\n      sha256: c61ed7b1deecf0e1ebe49e2fa79e3283937c5a21c7e48e3ed9856a4a14e1191a\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"11.0.0\"\r\n  get:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: get\r\n      sha256: e4e7335ede17452b391ed3b2ede016545706c01a02292a6c97619705e7d2a85e\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"4.6.6\"\r\n  http:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: http\r\n      sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.2.2\"\r\n  http_parser:\r\n    dependency: transitive\r\n    description:\r\n      name: http_parser\r\n      sha256: \"2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"4.0.2\"\r\n  image_picker:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: image_picker\r\n      sha256: \"021834d9c0c3de46bf0fe40341fa07168407f694d9b2bb18d532dc1261867f7a\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.1.2\"\r\n  image_picker_android:\r\n    dependency: transitive\r\n    description:\r\n      name: image_picker_android\r\n      sha256: b62d34a506e12bb965e824b6db4fbf709ee4589cf5d3e99b45ab2287b008ee0c\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.8.12+20\"\r\n  image_picker_for_web:\r\n    dependency: transitive\r\n    description:\r\n      name: image_picker_for_web\r\n      sha256: \"717eb042ab08c40767684327be06a5d8dbb341fe791d514e4b92c7bbe1b7bb83\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"3.0.6\"\r\n  image_picker_ios:\r\n    dependency: transitive\r\n    description:\r\n      name: image_picker_ios\r\n      sha256: \"05da758e67bc7839e886b3959848aa6b44ff123ab4b28f67891008afe8ef9100\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.8.12+2\"\r\n  image_picker_linux:\r\n    dependency: transitive\r\n    description:\r\n      name: image_picker_linux\r\n      sha256: \"4ed1d9bb36f7cd60aa6e6cd479779cc56a4cb4e4de8f49d487b1aaad831300fa\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.2.1+1\"\r\n  image_picker_macos:\r\n    dependency: transitive\r\n    description:\r\n      name: image_picker_macos\r\n      sha256: \"3f5ad1e8112a9a6111c46d0b57a7be2286a9a07fc6e1976fdf5be2bd31d4ff62\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.2.1+1\"\r\n  image_picker_platform_interface:\r\n    dependency: transitive\r\n    description:\r\n      name: image_picker_platform_interface\r\n      sha256: \"886d57f0be73c4b140004e78b9f28a8914a09e50c2d816bdd0520051a71236a0\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.10.1\"\r\n  image_picker_windows:\r\n    dependency: transitive\r\n    description:\r\n      name: image_picker_windows\r\n      sha256: \"6ad07afc4eb1bc25f3a01084d28520496c4a3bb0cb13685435838167c9dcedeb\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.2.1+1\"\r\n  intl:\r\n    dependency: \"direct main\"\r\n    description:\r\n      name: intl\r\n      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.19.0\"\r\n  leak_tracker:\r\n    dependency: transitive\r\n    description:\r\n      name: leak_tracker\r\n      sha256: \"3f87a60e8c63aecc975dda1ceedbc8f24de75f09e4856ea27daf8958f2f0ce05\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"10.0.5\"\r\n  leak_tracker_flutter_testing:\r\n    dependency: transitive\r\n    description:\r\n      name: leak_tracker_flutter_testing\r\n      sha256: \"932549fb305594d82d7183ecd9fa93463e9914e1b67cacc34bc40906594a1806\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"3.0.5\"\r\n  leak_tracker_testing:\r\n    dependency: transitive\r\n    description:\r\n      name: leak_tracker_testing\r\n      sha256: \"6ba465d5d76e67ddf503e1161d1f4a6bc42306f9d66ca1e8f079a47290fb06d3\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"3.0.1\"\r\n  lints:\r\n    dependency: transitive\r\n    description:\r\n      name: lints\r\n      sha256: \"976c774dd944a42e83e2467f4cc670daef7eed6295b10b36ae8c85bcbf828235\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"4.0.0\"\r\n  matcher:\r\n    dependency: transitive\r\n    description:\r\n      name: matcher\r\n      sha256: d2323aa2060500f906aa31a895b4030b6da3ebdcc5619d14ce1aada65cd161cb\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.12.16+1\"\r\n  material_color_utilities:\r\n    dependency: transitive\r\n    description:\r\n      name: material_color_utilities\r\n      sha256: f7142bb1154231d7ea5f96bc7bde4bda2a0945d2806bb11670e30b850d56bdec\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.11.1\"\r\n  meta:\r\n    dependency: transitive\r\n    description:\r\n      name: meta\r\n      sha256: bdb68674043280c3428e9ec998512fb681678676b3c54e773629ffe74419f8c7\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.15.0\"\r\n  mime:\r\n    dependency: transitive\r\n    description:\r\n      name: mime\r\n      sha256: \"41a20518f0cb1256669420fdba0cd90d21561e560ac240f26ef8322e45bb7ed6\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.0.0\"\r\n  nested:\r\n    dependency: transitive\r\n    description:\r\n      name: nested\r\n      sha256: \"03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.0.0\"\r\n  path:\r\n    dependency: transitive\r\n    description:\r\n      name: path\r\n      sha256: \"087ce49c3f0dc39180befefc60fdb4acd8f8620e5682fe2476afd0b3688bb4af\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.9.0\"\r\n  plugin_platform_interface:\r\n    dependency: transitive\r\n    description:\r\n      name: plugin_platform_interface\r\n      sha256: \"4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.8\"\r\n  provider:\r\n    dependency: transitive\r\n    description:\r\n      name: provider\r\n      sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"6.1.2\"\r\n  sky_engine:\r\n    dependency: transitive\r\n    description: flutter\r\n    source: sdk\r\n    version: \"0.0.99\"\r\n  source_span:\r\n    dependency: transitive\r\n    description:\r\n      name: source_span\r\n      sha256: \"53e943d4206a5e30df338fd4c6e7a077e02254531b138a15aec3bd143c1a8b3c\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.10.0\"\r\n  stack_trace:\r\n    dependency: transitive\r\n    description:\r\n      name: stack_trace\r\n      sha256: \"73713990125a6d93122541237550ee3352a2d84baad52d375a4cad2eb9b7ce0b\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.11.1\"\r\n  stream_channel:\r\n    dependency: transitive\r\n    description:\r\n      name: stream_channel\r\n      sha256: ba2aa5d8cc609d96bbb2899c28934f9e1af5cddbd60a827822ea467161eb54e7\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.2\"\r\n  string_scanner:\r\n    dependency: transitive\r\n    description:\r\n      name: string_scanner\r\n      sha256: \"556692adab6cfa87322a115640c11f13cb77b3f076ddcc5d6ae3c20242bedcde\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.2.0\"\r\n  term_glyph:\r\n    dependency: transitive\r\n    description:\r\n      name: term_glyph\r\n      sha256: a29248a84fbb7c79282b40b8c72a1209db169a2e0542bce341da992fe1bc7e84\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.2.1\"\r\n  test_api:\r\n    dependency: transitive\r\n    description:\r\n      name: test_api\r\n      sha256: \"5b8a98dafc4d5c4c9c72d8b31ab2b23fc13422348d2997120294d3bac86b4ddb\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"0.7.2\"\r\n  typed_data:\r\n    dependency: transitive\r\n    description:\r\n      name: typed_data\r\n      sha256: f9049c039ebfeb4cf7a7104a675823cd72dba8297f264b6637062516699fa006\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.4.0\"\r\n  universal_io:\r\n    dependency: transitive\r\n    description:\r\n      name: universal_io\r\n      sha256: \"1722b2dcc462b4b2f3ee7d188dad008b6eb4c40bbd03a3de451d82c78bba9aad\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.2.2\"\r\n  vector_math:\r\n    dependency: transitive\r\n    description:\r\n      name: vector_math\r\n      sha256: \"80b3257d1492ce4d091729e3a67a60407d227c27241d6927be0130c98e741803\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"2.1.4\"\r\n  vm_service:\r\n    dependency: transitive\r\n    description:\r\n      name: vm_service\r\n      sha256: \"5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d\"\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"14.2.5\"\r\n  web:\r\n    dependency: transitive\r\n    description:\r\n      name: web\r\n      sha256: cd3543bd5798f6ad290ea73d210f423502e71900302dde696f8bff84bf89a1cb\r\n      url: \"https://pub.dev\"\r\n    source: hosted\r\n    version: \"1.1.0\"\r\nsdks:\r\n  dart: \">=3.5.3 <4.0.0\"\r\n  flutter: \">=3.24.0\"\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/pubspec.lock b/frontend/bazaar_to_go/pubspec.lock
+--- a/frontend/bazaar_to_go/pubspec.lock	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/pubspec.lock	(date 1737077951019)
+@@ -53,10 +53,10 @@
+     dependency: transitive
+     description:
+       name: collection
+-      sha256: ee67cb0715911d28db6bf4af1026078bd6f0128b07a5f66fb2ed94ec6783c09a
++      sha256: a1ace0a119f20aabc852d165077c036cd864315bd99b7eaa10a60100341941bf
+       url: "https://pub.dev"
+     source: hosted
+-    version: "1.18.0"
++    version: "1.19.0"
+   convert:
+     dependency: transitive
+     description:
+@@ -146,18 +146,18 @@
+     dependency: "direct main"
+     description:
+       name: flutter_form_builder
+-      sha256: c278ef69b08957d484f83413f0e77b656a39b7a7bb4eb8a295da3a820ecc6545
++      sha256: "375da52998c72f80dec9187bd93afa7ab202b89d5d066699368ff96d39fd4876"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "9.5.0"
++    version: "9.7.0"
+   flutter_lints:
+     dependency: "direct dev"
+     description:
+       name: flutter_lints
+-      sha256: "3f41d009ba7172d5ff9be5f6e6e6abb4300e263aab8866d2a0842ed2a70f8f0c"
++      sha256: "5398f14efa795ffb7a33e9b6a08798b26a180edac4ad7db3f231e40f82ce11e1"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "4.0.0"
++    version: "5.0.0"
+   flutter_localizations:
+     dependency: transitive
+     description: flutter
+@@ -201,10 +201,10 @@
+     dependency: "direct main"
+     description:
+       name: form_builder_validators
+-      sha256: c61ed7b1deecf0e1ebe49e2fa79e3283937c5a21c7e48e3ed9856a4a14e1191a
++      sha256: "517fb884183fff7a0ef3db7d375981011da26ee452f20fb3d2e788ad527ad01d"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "11.0.0"
++    version: "11.1.1"
+   get:
+     dependency: "direct main"
+     description:
+@@ -225,10 +225,10 @@
+     dependency: transitive
+     description:
+       name: http_parser
+-      sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
++      sha256: "178d74305e7866013777bab2c3d8726205dc5a4dd935297175b19a23a2e66571"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "4.0.2"
++    version: "4.1.2"
+   image_picker:
+     dependency: "direct main"
+     description:
+@@ -305,18 +305,18 @@
+     dependency: transitive
+     description:
+       name: leak_tracker
+-      sha256: "3f87a60e8c63aecc975dda1ceedbc8f24de75f09e4856ea27daf8958f2f0ce05"
++      sha256: "7bb2830ebd849694d1ec25bf1f44582d6ac531a57a365a803a6034ff751d2d06"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "10.0.5"
++    version: "10.0.7"
+   leak_tracker_flutter_testing:
+     dependency: transitive
+     description:
+       name: leak_tracker_flutter_testing
+-      sha256: "932549fb305594d82d7183ecd9fa93463e9914e1b67cacc34bc40906594a1806"
++      sha256: "9491a714cca3667b60b5c420da8217e6de0d1ba7a5ec322fab01758f6998f379"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "3.0.5"
++    version: "3.0.8"
+   leak_tracker_testing:
+     dependency: transitive
+     description:
+@@ -329,10 +329,10 @@
+     dependency: transitive
+     description:
+       name: lints
+-      sha256: "976c774dd944a42e83e2467f4cc670daef7eed6295b10b36ae8c85bcbf828235"
++      sha256: c35bb79562d980e9a453fc715854e1ed39e24e7d0297a880ef54e17f9874a9d7
+       url: "https://pub.dev"
+     source: hosted
+-    version: "4.0.0"
++    version: "5.1.1"
+   matcher:
+     dependency: transitive
+     description:
+@@ -401,7 +401,7 @@
+     dependency: transitive
+     description: flutter
+     source: sdk
+-    version: "0.0.99"
++    version: "0.0.0"
+   source_span:
+     dependency: transitive
+     description:
+@@ -414,10 +414,10 @@
+     dependency: transitive
+     description:
+       name: stack_trace
+-      sha256: "73713990125a6d93122541237550ee3352a2d84baad52d375a4cad2eb9b7ce0b"
++      sha256: "9f47fd3630d76be3ab26f0ee06d213679aa425996925ff3feffdec504931c377"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "1.11.1"
++    version: "1.12.0"
+   stream_channel:
+     dependency: transitive
+     description:
+@@ -430,10 +430,10 @@
+     dependency: transitive
+     description:
+       name: string_scanner
+-      sha256: "556692adab6cfa87322a115640c11f13cb77b3f076ddcc5d6ae3c20242bedcde"
++      sha256: "688af5ed3402a4bde5b3a6c15fd768dbf2621a614950b17f04626c431ab3c4c3"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "1.2.0"
++    version: "1.3.0"
+   term_glyph:
+     dependency: transitive
+     description:
+@@ -446,10 +446,10 @@
+     dependency: transitive
+     description:
+       name: test_api
+-      sha256: "5b8a98dafc4d5c4c9c72d8b31ab2b23fc13422348d2997120294d3bac86b4ddb"
++      sha256: "664d3a9a64782fcdeb83ce9c6b39e78fd2971d4e37827b9b06c3aa1edc5e760c"
+       url: "https://pub.dev"
+     source: hosted
+-    version: "0.7.2"
++    version: "0.7.3"
+   typed_data:
+     dependency: transitive
+     description:
+@@ -478,10 +478,10 @@
+     dependency: transitive
+     description:
+       name: vm_service
+-      sha256: "5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d"
++      sha256: f6be3ed8bd01289b34d679c2b62226f63c0e69f9fd2e50a6b3c1c729a961041b
+       url: "https://pub.dev"
+     source: hosted
+-    version: "14.2.5"
++    version: "14.3.0"
+   web:
+     dependency: transitive
+     description:
+@@ -491,5 +491,5 @@
+     source: hosted
+     version: "1.1.0"
+ sdks:
+-  dart: ">=3.5.3 <4.0.0"
+-  flutter: ">=3.24.0"
++  dart: ">=3.6.0 <4.0.0"
++  flutter: ">=3.27.0"
+Index: frontend/bazaar_to_go/lib/main.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'package:bazaar_to_go/view/register_screen.dart';\r\nimport 'package:bazaar_to_go/view/splash_screen.dart';\r\nimport 'package:flutter/material.dart';\r\nimport 'package:flutter_dotenv/flutter_dotenv.dart';\r\nimport 'package:flutter_screenutil/flutter_screenutil.dart';\r\nimport 'package:get/get.dart';\r\n\r\nvoid main() async {\r\n  WidgetsFlutterBinding.ensureInitialized();\r\n  await dotenv.load(fileName: \".env\");\r\n  runApp(const GetMaterialApp(\r\n    debugShowCheckedModeBanner: false,\r\n    home: MyApp(),\r\n  ));\r\n}\r\n\r\nclass MyApp extends StatelessWidget {\r\n  const MyApp({super.key});\r\n\r\n  @override\r\n  Widget build(BuildContext context) {\r\n    return MaterialApp(\r\n      home:  RegisterScreen(),\r\n      debugShowCheckedModeBanner: false,\r\n      builder: (context, child) {\r\n        // Get the media query size\r\n        final mediaQueryData = MediaQuery.of(context);\r\n        final designSize =\r\n            mediaQueryData.size.width > mediaQueryData.size.height\r\n                ? const Size(800, 300)\r\n                : const Size(300, 800);\r\n\r\n        // Initialize ScreenUtil with the correct design size\r\n        ScreenUtil.init(\r\n          context,\r\n          designSize: designSize,\r\n          minTextAdapt: true,\r\n          splitScreenMode: true,\r\n        );\r\n\r\n        return child!;\r\n      },\r\n    );\r\n  }\r\n}\r\n\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/lib/main.dart b/frontend/bazaar_to_go/lib/main.dart
+--- a/frontend/bazaar_to_go/lib/main.dart	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/lib/main.dart	(date 1737073643452)
+@@ -20,7 +20,7 @@
+   @override
+   Widget build(BuildContext context) {
+     return MaterialApp(
+-      home:  RegisterScreen(),
++      home: SplashScreen(),
+       debugShowCheckedModeBanner: false,
+       builder: (context, child) {
+         // Get the media query size
+Index: frontend/bazaar_to_go/lib/repository/api_service.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import 'dart:convert';\r\nimport 'package:bazaar_to_go/repository/endpoint.dart';\r\nimport 'package:http/http.dart' as http;\r\n\r\nclass ApiService {\r\n  Future<http.Response> get(Endpoint endpoint, String? paramater) async {\r\n    final url = Uri.parse('${endpoint.getUrl()}$paramater');\r\n    print(url);\r\n    final response = await http.get(url);\r\n    if (response.statusCode == 200) {\r\n      print(response.body);\r\n      return response;\r\n    } else {\r\n      throw Exception('Failed to load data');\r\n    }\r\n  }\r\n\r\n  Future<http.Response> post(String endpoint, Map<String, dynamic> data) async {\r\n    final url = Uri.parse('$endpoint');\r\n    final response = await http.post(\r\n      url,\r\n      headers: {'Content-Type': 'application/json'},\r\n      body: jsonEncode(data),\r\n    );\r\n    if (response.statusCode == 200 || response.statusCode == 201) {\r\n      return response;\r\n    } else {\r\n      throw Exception('Failed to post data');\r\n    }\r\n  }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/lib/repository/api_service.dart b/frontend/bazaar_to_go/lib/repository/api_service.dart
+--- a/frontend/bazaar_to_go/lib/repository/api_service.dart	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/lib/repository/api_service.dart	(date 1737099042878)
+@@ -1,11 +1,12 @@
+ import 'dart:convert';
+ import 'package:bazaar_to_go/repository/endpoint.dart';
++import 'package:flutter/cupertino.dart';
+ import 'package:http/http.dart' as http;
++import 'package:get/get.dart';
+ 
+ class ApiService {
+-  Future<http.Response> get(Endpoint endpoint, String? paramater) async {
++ static Future<http.Response> get(Endpoint endpoint, String? paramater) async {
+     final url = Uri.parse('${endpoint.getUrl()}$paramater');
+-    print(url);
+     final response = await http.get(url);
+     if (response.statusCode == 200) {
+       print(response.body);
+@@ -15,15 +16,18 @@
+     }
+   }
+ 
+-  Future<http.Response> post(String endpoint, Map<String, dynamic> data) async {
+-    final url = Uri.parse('$endpoint');
++  static Future<http.Response> post(String endpoint, Map<String, dynamic> data) async {
++    final url = Uri.parse(endpoint);
++    print(url.toString());
+     final response = await http.post(
+       url,
+       headers: {'Content-Type': 'application/json'},
+       body: jsonEncode(data),
+     );
++    print(jsonEncode(data));
+     if (response.statusCode == 200 || response.statusCode == 201) {
+       return response;
++
+     } else {
+       throw Exception('Failed to post data');
+     }
+Index: frontend/bazaar_to_go/lib/repository/endpoint.dart
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>enum Endpoint {\r\n  // User routes\r\n  signUp('https://yourdomain.com/api/ZenNexify/owner/signup', HttpMethod.post),\r\n  login('https://yourdomain.com/api/ZenNexify/owner/login', HttpMethod.post),\r\n  updateInfo(\r\n      'https://yourdomain.com/api/ZenNexify/owner/updateInfo', HttpMethod.post),\r\n\r\n  // Store routes\r\n  postStore(\r\n      'https://yourdomain.com/api/ZenNexify/owner/stores', HttpMethod.post),\r\n  getStore('https://yourdomain.com/api/ZenNexify/owner/stores', HttpMethod.get),\r\n\r\n  // Product routes\r\n  postProduct(\r\n      'https://yourdomain.com/api/ZenNexify/owner/products', HttpMethod.post),\r\n  getProduct(\r\n      'https://yourdomain.com/api/ZenNexify/owner/products', HttpMethod.get),\r\n\r\n  // Address lookup (using a more appropriate URL - consider a dedicated API)\r\n  getAddress('http://www.postalpincode.in/api/pincode/', HttpMethod.get);\r\n\r\n  final String url;\r\n  final HttpMethod method;\r\n\r\n  const Endpoint(this.url, this.method);\r\n\r\n  String getUrl() {\r\n    return url;\r\n  }\r\n\r\n  HttpMethod getMethod() {\r\n    return method;\r\n  }\r\n}\r\n\r\nenum HttpMethod {\r\n  get,\r\n  post,\r\n  put,\r\n  delete,\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/frontend/bazaar_to_go/lib/repository/endpoint.dart b/frontend/bazaar_to_go/lib/repository/endpoint.dart
+--- a/frontend/bazaar_to_go/lib/repository/endpoint.dart	(revision deb371fec891dd78b5500764603db56c1d4970cd)
++++ b/frontend/bazaar_to_go/lib/repository/endpoint.dart	(date 1737081106909)
+@@ -1,7 +1,7 @@
+ enum Endpoint {
+   // User routes
+-  signUp('https://yourdomain.com/api/ZenNexify/owner/signup', HttpMethod.post),
+-  login('https://yourdomain.com/api/ZenNexify/owner/login', HttpMethod.post),
++  signUp('http://10.0.2.2:8000/api/ZenNexify/owner/signUp', HttpMethod.post),
++  login('http://10.0.2.2:8000/api/ZenNexify/owner/login', HttpMethod.post),
+   updateInfo(
+       'https://yourdomain.com/api/ZenNexify/owner/updateInfo', HttpMethod.post),
+ 
