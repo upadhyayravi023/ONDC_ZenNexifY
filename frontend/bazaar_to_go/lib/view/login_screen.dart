@@ -1,13 +1,69 @@
+import 'dart:convert';
+
 import 'package:bazaar_to_go/controllers/login_controller.dart';
+import 'package:bazaar_to_go/view/register_screen.dart';
 import 'package:bazaar_to_go/view/signup_screen.dart';
+import 'package:bazaar_to_go/view/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../repository/api_service.dart';
+import '../repository/endpoint.dart';
+
 class LoginScreen extends StatelessWidget {
   
-  const LoginScreen({super.key});
-  
+  LoginScreen({super.key});
+  void _onLogin() async {
+    print(_emailController.text);
+    print(_passwordController.text);
+    try {
+      final response = await ApiService.post(
+        Endpoint.login.getUrl(),
+        {
+          'email': _emailController.text.toString(),
+          'password': _passwordController.text.toString(),
+        } as Map<String, dynamic>,
+      );
+
+      if (response.statusCode == 200) {
+
+        final responseData = jsonDecode(response.body);
+
+        Get.snackbar(
+          'Success',
+          'Login Successful!',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+        Get.offAll((RegisterScreen()));
+      } else {
+        print("Login Failed: ${response.statusCode}, ${response.body}");
+        Get.snackbar(
+          'Error',
+          'Login Failed: ${response.body}',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (error) {
+      printError(info: error.toString());
+
+      Get.snackbar(
+        'Error',
+        'Login failed. Please try again. \n$Error',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final Color kDarkBlueColor = const Color(0xFF363AC2);
   @override
   Widget build(BuildContext context) {
@@ -46,6 +102,7 @@ class LoginScreen extends StatelessWidget {
                           border: const OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: kDarkBlueColor))),
+                      controller: _emailController,
                     ),
                     SizedBox(height: 20.h),
                     TextFormField(
@@ -57,6 +114,7 @@ class LoginScreen extends StatelessWidget {
                           border: const OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: kDarkBlueColor))),
+                      controller: _passwordController,
                     ),
                     const SizedBox(height: 10),
                     Align(
@@ -68,7 +126,10 @@ class LoginScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: (){
+                        _onLogin();
+                      }
+                      ,
                       style: ElevatedButton.styleFrom(
                           fixedSize: Size(240.w, 48.h),
                           backgroundColor: kDarkBlueColor),
