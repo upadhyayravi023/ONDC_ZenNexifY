@@ -12,8 +12,8 @@ const connectDB = require('./database/connect');
 const PORT = process.env.PORT || 8000;
 const { isLoggedIn } = require('./middleware/authMiddleware');
 
-const userSignUp = require('./routes/user')
-const Stores = require('./routes/stores')
+const userSignUp = require('./Routes/user')
+const Stores = require('./Routes/stores')
 dotenv.config();
 
 connectDB()
