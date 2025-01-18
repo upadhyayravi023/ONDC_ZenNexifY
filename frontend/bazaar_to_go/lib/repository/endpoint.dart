@@ -4,7 +4,7 @@ enum Endpoint {
   login('http://10.0.2.2:8000/api/ZenNexify/owner/login', HttpMethod.post),
   updateInfo(
       'https://yourdomain.com/api/ZenNexify/owner/updateInfo', HttpMethod.post),
-
+  logout('http://10.0.2.2:8000/api/ZenNexify/owner/login', HttpMethod.post),
   // Store routes
   postStore(
       'https://yourdomain.com/api/ZenNexify/owner/stores', HttpMethod.post),

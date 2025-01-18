@@ -1,6 +1,7 @@
-import 'package:bazaar_to_go/view/register_screen.dart';
-import 'package:bazaar_to_go/view/register_shop.dart';
-import 'package:bazaar_to_go/view/splash_screen.dart';
+import 'package:bazaar_to_go/view/auth/register_screen.dart';
+import 'package:bazaar_to_go/view/profile/profile.dart';
+import 'package:bazaar_to_go/view/store/register_shop.dart';
+import 'package:bazaar_to_go/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:  SplashScreen(),
+      home:  ProfileView(username: 'null'),
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         // Get the media query size
