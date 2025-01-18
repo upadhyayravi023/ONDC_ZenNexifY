@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const userModel = require('../models/user');
 const storeModel = require('../models/store');
 const productModel = require('../models/product');
-const { generateToken } = require('../utils/generateToken');
+const { generateToken } = require('../utils/generateTokens');
 
 
 router.post('/', async (req, res) => {

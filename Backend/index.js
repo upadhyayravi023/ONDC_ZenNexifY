@@ -1,9 +1,7 @@
-
 const express = require('express');
 const path = require('path');
 const app = express();
 const mongoose = require('mongoose')
-const ownerRoute = require('./routes/ownerRoute');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const helmet = require('helmet');

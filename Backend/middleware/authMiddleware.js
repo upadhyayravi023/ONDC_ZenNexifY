@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/user');
-const { generateToken } = require('../utils/generateToken');
 
 const isLoggedIn = async (req, res, next) => {
   try {
