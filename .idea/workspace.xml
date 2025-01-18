@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08a52a9c-4c81-4f4a-8e4b-97af0641f4f4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/endpoint.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/endpoint.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/login_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/on_boarding.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/on_boarding.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/register_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/register_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/register_shop.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/store/register_shop.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/signup_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/signup_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugin_registrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugin_registrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugin_registrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugins.cmake" afterDir="false" />
-    </list>
+    <list default="true" id="08a52a9c-4c81-4f4a-8e4b-97af0641f4f4" name="Changes" comment="enabled auth features" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,6 +67,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Dell\StudioProjects\ONDC_ZenNexifY\frontend\bazaar_to_go\lib" />
       <recent name="C:\Users\Dell\StudioProjects\ONDC_ZenNexifY\frontend\bazaar_to_go\lib\view\store" />
       <recent name="C:\Users\Dell\StudioProjects\ONDC_ZenNexifY\frontend\bazaar_to_go\lib\view\auth" />
     </key>
@@ -125,7 +111,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737117322520</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="enabled auth features">
+      <option name="closed" value="true" />
+      <created>1737219566922</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1737219566922</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
