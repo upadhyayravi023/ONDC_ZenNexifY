@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08a52a9c-4c81-4f4a-8e4b-97af0641f4f4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/.env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/endpoint.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/endpoint.dart" afterDir="false" />
-    </list>
+    <list default="true" id="08a52a9c-4c81-4f4a-8e4b-97af0641f4f4" name="Changes" comment="error fix" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,6 +33,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -131,11 +128,20 @@
       <option name="project" value="LOCAL" />
       <updated>1737220022067</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="error fix">
+      <option name="closed" value="true" />
+      <created>1737224633994</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1737224633994</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="enabled auth features" />
-    <option name="LAST_COMMIT_MESSAGE" value="enabled auth features" />
+    <MESSAGE value="error fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="error fix" />
   </component>
 </project>
