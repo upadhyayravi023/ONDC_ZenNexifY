@@ -1,4 +1,4 @@
-import 'package:bazaar_to_go/view/login_screen.dart';
+import 'package:bazaar_to_go/view/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
