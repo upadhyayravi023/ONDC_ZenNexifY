@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08a52a9c-4c81-4f4a-8e4b-97af0641f4f4" name="Changes" comment="enabled auth features" />
+    <list default="true" id="08a52a9c-4c81-4f4a-8e4b-97af0641f4f4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/endpoint.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/endpoint.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -119,7 +123,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737219566922</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="enabled auth features">
+      <option name="closed" value="true" />
+      <created>1737220022067</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1737220022067</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
