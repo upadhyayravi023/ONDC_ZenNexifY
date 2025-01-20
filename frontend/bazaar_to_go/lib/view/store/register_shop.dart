@@ -4,10 +4,15 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
-import 'dart:convert'; // Import for JSON encoding
+import 'dart:convert';
+
+import '../../repository/api_service.dart';
+import '../../repository/endpoint.dart';
+import '../../widgets/bnb.dart'; // Import for JSON encoding
 
 class RegisterShop extends StatefulWidget {
-  const RegisterShop({super.key});
+  final String username;
+  const RegisterShop({super.key, required this.username});
 
   @override
   State<RegisterShop> createState() => _RegisterShopState();
@@ -16,8 +21,68 @@ class RegisterShop extends StatefulWidget {
 class _RegisterShopState extends State<RegisterShop> {
   final _storeFormKey = GlobalKey<FormBuilderState>();
   final controller = Get.put(RegisterShopController());
+  final TextEditingController _storeNameController = TextEditingController();
+  final TextEditingController _storeStreetController = TextEditingController();
+  final TextEditingController _storeCityController = TextEditingController();
+  final TextEditingController _storeStateController = TextEditingController();
+  final TextEditingController _storeZipController = TextEditingController();
+  final TextEditingController _storeCountryController = TextEditingController();
+
+
   int _newTextFieldId = 0; // Initialize as an integer
   final Color kDarkBlueColor = const Color(0xFF363AC2);
+  void _onregister() async {
+    try {
+
+      final response = await ApiService.post(
+        Endpoint.postStore.getUrl(),
+        {
+        "storename": _storeNameController,
+        "username": widget.username,
+        "location": {
+         "street": _storeStreetController,
+        "city": _storeCityController,
+      "state": _storeStateController,
+      "zip": _storeZipController,
+      "country": _storeCountryController
+      },
+        "contact": 1234567890
+        }as Map<String, dynamic>,
+      );
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        Get.snackbar(
+          'Success',
+          'Register Successful!',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+
+
+        Get.offAll(bnb(username: widget.username));
+      } else {
+        print("Register Failed: ${response.statusCode}, ${response.body}");
+        Get.snackbar(
+          'Error',
+          'Register Failed: ${response.body}',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (error) {
+      printError(info: error.toString());
+
+      Get.snackbar(
+        'Error',
+        'Register failed. Please try again. \n$Error',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +208,8 @@ class LocalShop extends StatelessWidget {
         children: [
           const Text("Local Store", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
           FormBuilderTextField(
-            name: 'local_store_${index}_name', // Unique field name
+            name: 'local_store_${index}_name',
+
             validator: FormBuilderValidators.required(),
             decoration: const InputDecoration(labelText: "Store Name"),
           ),
@@ -155,7 +221,9 @@ class LocalShop extends StatelessWidget {
           SizedBox(height: 10),
           const Text("Address", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
           FormBuilderTextField(
-            name: 'local_store_${index}_pincode', // Unique field name
+            name: 'local_store_${index}_pincode',
+
+            // Unique field name
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(),
               FormBuilderValidators.numeric(),
@@ -189,6 +257,7 @@ class LocalShop extends StatelessWidget {
 }
 
 class OnlineShop extends StatelessWidget {
+
   const OnlineShop({
     super.key,
     this.onDelete,

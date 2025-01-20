@@ -46,7 +46,12 @@ dependencies:
   cloudinary_url_gen: ^1.0.0
   flutter_dotenv: ^5.2.1
   image_picker: ^1.1.2
-
+  fl_chart:
+  flutter_gemini: ^2.0.4
+  dash_chat_2: ^0.0.21
+  google_generative_ai: ^0.4.6
+  grouped_list: ^5.1.2
+  pie_chart: 5.4.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

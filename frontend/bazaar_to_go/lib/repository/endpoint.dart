@@ -1,13 +1,15 @@
 enum Endpoint {
   // User routes
-  signUp('http://10.0.2.2:8000/api/ZenNexify/signUp', HttpMethod.post),
-  login('http://10.0.2.2:8000/api/ZenNexify/login', HttpMethod.post),
-  updateInfo(
-      'https://yourdomain.com/api/ZenNexify/updateInfo', HttpMethod.post),
-  logout('http://10.0.2.2:8000/api/ZenNexify/logout', HttpMethod.post),
+
+  signUp('http://10.0.2.2:8000/api/ZenNexify/user', HttpMethod.post),
+  login('http://10.0.2.2:8000/api/ZenNexify/user/login', HttpMethod.post),
+  updateInfopost('http://10.0.2.2:8000/api/ZenNexify/user/userInformation', HttpMethod.post),
+  logout('http://10.0.2.2:8000/api/ZenNexify/user/logout', HttpMethod.post),
+  delete('http://10.0.2.2:8000/api/ZenNexify/user/deleteUser', HttpMethod.delete),
+  updateInfoget('http://10.0.2.2:8000/api/ZenNexify/user/userInformation', HttpMethod.get),
   // Store routes
   postStore(
-      'https://yourdomain.com/api/ZenNexify/owner/stores', HttpMethod.post),
+      'https://10.0.2.2:8000/api/ZenNexify/stores', HttpMethod.post),
   getStore('https://yourdomain.com/api/ZenNexify/owner/stores', HttpMethod.get),
 
   // Product routes

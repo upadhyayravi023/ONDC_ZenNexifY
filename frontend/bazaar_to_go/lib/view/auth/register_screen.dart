@@ -1,6 +1,7 @@
 import 'package:bazaar_to_go/viewmodel/register_viewmodel.dart';
 import 'package:bazaar_to_go/controllers/registration_controller.dart';
 import 'package:bazaar_to_go/model/add_details.dart';
+import 'package:bazaar_to_go/widgets/bnb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -8,17 +9,76 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:get/get.dart';
 
+import '../../repository/api_service.dart';
+import '../../repository/endpoint.dart';
+
 class RegisterScreen extends StatefulWidget {
- RegisterScreen({super.key});
+  final String username;
+
+ RegisterScreen({super.key, required this.username});
 
   @override
   State<RegisterScreen> createState() => StateRegisterScreen();
 }
 
+
+
 class StateRegisterScreen extends State<RegisterScreen> {
   final Color kDarkBlueColor = const Color(0xFF363AC2);
   final _formKey = GlobalKey<FormBuilderState>();
   final RegistrationController controller = Get.put(RegistrationController());
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _gstidController = TextEditingController();
+
+  void _onregister() async {
+    try {
+
+      final response = await ApiService.post(
+        Endpoint.updateInfopost.getUrl(),
+        {
+          'username': widget.username,
+          'name': _nameController.text.toString(),
+          'phone': _phoneController.text.toString(),
+          'Gst_id': _gstidController.text.toString(),
+
+        }as Map<String, dynamic>,
+      );
+
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        Get.snackbar(
+          'Success',
+          'Register Successful!',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+
+
+        Get.offAll(bnb(username: widget.username));
+      } else {
+        print("Register Failed: ${response.statusCode}, ${response.body}");
+        Get.snackbar(
+          'Error',
+          'Register Failed: ${response.body}',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (error) {
+      printError(info: error.toString());
+
+      Get.snackbar(
+        'Error',
+        'Register failed. Please try again. \n$Error',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,6 +151,7 @@ class StateRegisterScreen extends State<RegisterScreen> {
                       FormBuilderTextField(
                         autovalidateMode: AutovalidateMode.onUnfocus,
                         name: 'phone',
+                        controller: _phoneController,
                         decoration: InputDecoration(
                           labelText: 'Phone No (WhatsApp)',
                           filled: true,
@@ -288,10 +349,12 @@ class StateRegisterScreen extends State<RegisterScreen> {
                       ),
                       ElevatedButton(
                         onPressed: () {
+
                           if (_formKey.currentState!.fields['terms']?.value ==
                                   true &&
                               _formKey.currentState!.fields['privacy']?.value ==
                                   true) {
+
                             // Create a new mutable map from the unmodifiable map
                             Map<String, dynamic> field =
                                 Map.from(_formKey.currentState!.value);
@@ -303,6 +366,7 @@ class StateRegisterScreen extends State<RegisterScreen> {
                             });
 
                             print(field.toString());
+                            _onregister();
                           } else {
                             Get.snackbar("Message","Kindly accept terms and conditions");
                           }
@@ -327,13 +391,16 @@ class StateRegisterScreen extends State<RegisterScreen> {
   Widget buildtextfield(
       {required String name,
       required String label,
-      required Rx<bool> hasError,
-      int? reqlength}) {
+        required Rx<bool> hasError,
+        int? reqlength}) {
     return FormBuilderTextField(
       autovalidateMode: AutovalidateMode.onUnfocus,
       name: name,
-        controller:TextEditingController(
-            text: controller.name.value),
+      controller: name == "name"
+          ? _nameController
+          : name == "gstin"
+                  ? _gstidController
+                  : null,
       decoration: InputDecoration(
         fillColor: Color.fromARGB(255, 243, 245, 245),
         filled: true,

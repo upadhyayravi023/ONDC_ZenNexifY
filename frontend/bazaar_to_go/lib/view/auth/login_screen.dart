@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:bazaar_to_go/controllers/login_controller.dart';
 import 'package:bazaar_to_go/view/auth/register_screen.dart';
 import 'package:bazaar_to_go/view/auth/signup_screen.dart';
-import 'package:bazaar_to_go/splash_screen.dart';
+import 'package:bazaar_to_go/view/splash_screen.dart';
+import 'package:bazaar_to_go/widgets/bnb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -15,13 +16,13 @@ class LoginScreen extends StatelessWidget {
   
   LoginScreen({super.key});
   void _onLogin() async {
-    print(_emailController.text);
+    print(_usernameController.text);
     print(_passwordController.text);
     try {
       final response = await ApiService.post(
         Endpoint.login.getUrl(),
         {
-          'email': _emailController.text.toString(),
+          'username': _usernameController.text.toString(),
           'password': _passwordController.text.toString(),
         } as Map<String, dynamic>,
       );
@@ -37,7 +38,7 @@ class LoginScreen extends StatelessWidget {
           backgroundColor: Colors.green,
           colorText: Colors.white,
         );
-        Get.offAll((RegisterScreen()));
+        Get.offAll((bnb(username: _usernameController.text,)));
       } else {
         print("Login Failed: ${response.statusCode}, ${response.body}");
         Get.snackbar(
@@ -62,7 +63,7 @@ class LoginScreen extends StatelessWidget {
   }
 
 
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final Color kDarkBlueColor = const Color(0xFF363AC2);
   @override
@@ -97,12 +98,12 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(height: 25.h),
                     TextFormField(
                       decoration: InputDecoration(
-                          labelText: 'Email',
+                          labelText: 'username',
                           prefixIcon: const Icon(Icons.email),
                           border: const OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: kDarkBlueColor))),
-                      controller: _emailController,
+                      controller: _usernameController,
                     ),
                     SizedBox(height: 20.h),
                     TextFormField(
