@@ -7,9 +7,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const connectDB = require('./database/connect'); 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 const { isLoggedIn } = require('./middleware/authMiddleware');
-
 const userSignUp = require('./Routes/user')
 const Stores = require('./Routes/stores')
 dotenv.config();

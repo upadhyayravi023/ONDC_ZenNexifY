@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 
 import '../../repository/api_service.dart';
 import '../../repository/endpoint.dart';
 import '../../widgets/profile.dart';
 import '../auth/login_screen.dart';
+import 'accounts.dart';
+import 'help.dart';
 
 
 class ProfileView extends StatefulWidget {
@@ -19,12 +22,14 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
+
+
   @override
   void initState() {
     super.initState();
-  }
 
-  Future<void> _onLogout(BuildContext content) async {
+  }
+  Future<void> _onLogout() async {
     try {
       final response = await ApiService.post(
         Endpoint.logout.getUrl(),
@@ -70,7 +75,9 @@ class _ProfileViewState extends State<ProfileView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
+        title: Center(child: Text('Profile')),
+        shadowColor: Colors.blue,
+        elevation: 3,
 
       ),
       body: SingleChildScrollView(
@@ -79,8 +86,23 @@ class _ProfileViewState extends State<ProfileView> {
           child: Column(
             
             children: [
-             _buildPortraitLayout(context),
-        
+             _buildPortraitLayout(context, widget.username),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _onLogout(),
+                child: Text(
+                  'Logout',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30), // No rounded corners, makes it a rectangle
+                  ),
+                ),
+              ),
+
+
             ],
           ),
         ),
@@ -89,7 +111,7 @@ class _ProfileViewState extends State<ProfileView> {
   }
 }
 
-Widget _buildPortraitLayout(BuildContext context) {
+Widget _buildPortraitLayout(BuildContext context, String username) {
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,28 +191,22 @@ Widget _buildPortraitLayout(BuildContext context) {
         title: 'Account Settings',
         value: '',
         leading: Icon(Icons.perm_identity),
-      //  onPressed: () => Get.to(() => AccountSettings()),
-        onPressed: null,
-
+      onPressed: () => Get.to(() => AccountSettings(username: username)),
       ),
       SizedBox(height: 10),
       ProfileInfoTile(
         title: 'Help Desk',
         value: '',
         leading: Icon(Icons.question_mark),
-        //onPressed: () => Get.to(() => HelpDesk()),
-      onPressed: null,
+        onPressed: () => Get.to(() => HelpDesk()),
+
       ),
       SizedBox(height: 10),
-      ProfileInfoTile(
-        title: 'Logout',
-        value: '',
-        leading: Icon(Icons.logout),
-        onPressed: () => null,
-      ),
-      SizedBox(height: 20),
+
     ],
   );
 }
+
+
 
 

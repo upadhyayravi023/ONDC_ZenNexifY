@@ -2,12 +2,14 @@ import 'package:bazaar_to_go/view/order/order.dart';
 import 'package:bazaar_to_go/view/store/register_shop.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:bazaar_to_go/view/order/order.dart';
 import '../controllers/bnb_controller.dart';
 import '../view/Dashboard/dashboardview.dart';
+import '../view/order/ordersum.dart';
 import '../view/profile/profile.dart';
 
 class bnb extends StatelessWidget {
+
   final String username;
   final BottomNavController bottomNavController = Get.put(BottomNavController());
   bnb({super.key, required this.username});
@@ -15,9 +17,9 @@ class bnb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      DashboardView(),
-      RegisterShop(),
-      OrderView(),
+      Dashboardview(username: username,),
+      RegisterShop(username: username,),
+      OrdersSummary(),
       ProfileView(username : username),
     ];
 

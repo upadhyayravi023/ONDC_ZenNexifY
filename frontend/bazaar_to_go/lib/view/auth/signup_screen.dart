@@ -4,7 +4,8 @@ import 'package:bazaar_to_go/controllers/signup_controller.dart';
 import 'package:bazaar_to_go/repository/api_service.dart';
 import 'package:bazaar_to_go/repository/endpoint.dart';
 import 'package:bazaar_to_go/view/auth/login_screen.dart';
-import 'package:bazaar_to_go/splash_screen.dart';
+import 'package:bazaar_to_go/view/auth/register_screen.dart';
+import 'package:bazaar_to_go/view/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +26,7 @@ class SignupScreen extends StatelessWidget {
           'password': _passwordController.text.toString()
         }as Map<String, dynamic>,
       );
-
+print("1");
       if (response.statusCode == 201 || response.statusCode == 200) {
         Get.snackbar(
           'Success',
@@ -36,7 +37,7 @@ class SignupScreen extends StatelessWidget {
         );
 
 
-        Get.offAll(SplashScreen());
+        Get.offAll(RegisterScreen(username: _username.text));
       } else {
         print("Signup Failed: ${response.statusCode}, ${response.body}");
         Get.snackbar(

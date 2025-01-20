@@ -4,7 +4,31 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08a52a9c-4c81-4f4a-8e4b-97af0641f4f4" name="Changes" comment="error fix" />
+    <list default="true" id="08a52a9c-4c81-4f4a-8e4b-97af0641f4f4" name="Changes" comment="profile Screen added">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/.env" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/api_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/api_service.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/endpoint.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/endpoint.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/splash_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/Dashboard/dashboardview.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/Dashboard/dashboardview.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/login_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/register_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/register_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/signup_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/signup_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/order/order.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/order/order.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/profile/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/profile/profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/store/register_shop.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/store/register_shop.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/widgets/bnb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/widgets/bnb.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugins.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugins.cmake" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,34 +67,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DEBUGGABLE_DEVICE&quot;: &quot;emulator-5554&quot;,
-    &quot;DEBUGGABLE_PROCESS&quot;: &quot;com.example.bazaar_to_go&quot;,
-    &quot;DEBUGGER_ID&quot;: &quot;Java&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;SHOW_ALL_PROCESSES&quot;: &quot;true&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DEBUGGABLE_DEVICE": "emulator-5554",
+    "DEBUGGABLE_PROCESS": "com.example.bazaar_to_go",
+    "DEBUGGER_ID": "Java",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHOW_ALL_PROCESSES": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "io.flutter.reload.alreadyRun": "true",
+    "last_opened_file_path": "C:/Users/Dell/StudioProjects/ONDC_ZenNexifY/frontend/bazaar_to_go/lib",
+    "settings.editor.selected.configurable": "AndroidSdkUpdater",
+    "show.migrate.to.gradle.popup": "false"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;ChangesTree.GroupingKeys&quot;: [
-      &quot;directory&quot;
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "directory"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Dell\StudioProjects\ONDC_ZenNexifY\frontend\bazaar_to_go\lib" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Dell\StudioProjects\ONDC_ZenNexifY\frontend\bazaar_to_go\lib\view" />
+      <recent name="C:\Users\Dell\StudioProjects\ONDC_ZenNexifY\frontend\bazaar_to_go\lib" />
+      <recent name="C:\Users\Dell\StudioProjects\ONDC_ZenNexifY\frontend\bazaar_to_go\lib\widgets" />
+      <recent name="C:\Users\Dell\StudioProjects\ONDC_ZenNexifY\frontend\bazaar_to_go\lib\wid" />
       <recent name="C:\Users\Dell\StudioProjects\ONDC_ZenNexifY\frontend\bazaar_to_go\lib\view\store" />
-      <recent name="C:\Users\Dell\StudioProjects\ONDC_ZenNexifY\frontend\bazaar_to_go\lib\view\auth" />
     </key>
   </component>
   <component name="RunManager">
@@ -136,12 +166,21 @@
       <option name="project" value="LOCAL" />
       <updated>1737224633994</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="profile Screen added">
+      <option name="closed" value="true" />
+      <created>1737224895422</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1737224895422</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="enabled auth features" />
     <MESSAGE value="error fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="error fix" />
+    <MESSAGE value="profile Screen added" />
+    <option name="LAST_COMMIT_MESSAGE" value="profile Screen added" />
   </component>
 </project>
