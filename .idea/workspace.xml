@@ -4,30 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08a52a9c-4c81-4f4a-8e4b-97af0641f4f4" name="Changes" comment="profile Screen added">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/.env" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/.env" afterDir="false" />
+    <list default="true" id="08a52a9c-4c81-4f4a-8e4b-97af0641f4f4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/android/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/api_service.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/api_service.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/endpoint.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/repository/endpoint.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/splash_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/splash_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/Dashboard/dashboardview.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/Dashboard/dashboardview.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/login_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/login_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/register_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/register_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/signup_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/auth/signup_screen.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/order/order.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/order/order.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/profile/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/profile/profile.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/store/register_shop.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/view/store/register_shop.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/widgets/bnb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/lib/widgets/bnb.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/linux/flutter/generated_plugins.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/macos/Flutter/GeneratedPluginRegistrant.swift" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/macos/Flutter/GeneratedPluginRegistrant.swift" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugin_registrant.cc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugin_registrant.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugins.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/bazaar_to_go/windows/flutter/generated_plugins.cmake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,13 +153,22 @@
       <option name="project" value="LOCAL" />
       <updated>1737224895422</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="profile view, order view , dashboard view added">
+      <option name="closed" value="true" />
+      <created>1737385169455</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1737385169457</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="enabled auth features" />
     <MESSAGE value="error fix" />
     <MESSAGE value="profile Screen added" />
-    <option name="LAST_COMMIT_MESSAGE" value="profile Screen added" />
+    <MESSAGE value="profile view, order view , dashboard view added" />
+    <option name="LAST_COMMIT_MESSAGE" value="profile view, order view , dashboard view added" />
   </component>
 </project>

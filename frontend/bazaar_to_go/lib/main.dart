@@ -2,6 +2,7 @@ import 'package:bazaar_to_go/view/Dashboard/chat_bot.dart';
 import 'package:bazaar_to_go/view/auth/register_screen.dart';
 import 'package:bazaar_to_go/view/order/order.dart';
 import 'package:bazaar_to_go/view/profile/profile.dart';
+import 'package:bazaar_to_go/view/store/catelog.dart';
 import 'package:bazaar_to_go/view/store/register_shop.dart';
 import 'package:bazaar_to_go/view/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:  SplashScreen(),
+      home:  ProductCatalogScreen(),
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         // Get the media query size
