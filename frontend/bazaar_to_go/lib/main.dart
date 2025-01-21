@@ -1,5 +1,6 @@
 import 'package:bazaar_to_go/view/Dashboard/chat_bot.dart';
 import 'package:bazaar_to_go/view/auth/register_screen.dart';
+import 'package:bazaar_to_go/view/on_boarding.dart';
 import 'package:bazaar_to_go/view/order/order.dart';
 import 'package:bazaar_to_go/view/profile/profile.dart';
 import 'package:bazaar_to_go/view/store/catelog.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:  ProductCatalogScreen(),
+      home:  OnBoarding(),
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         // Get the media query size

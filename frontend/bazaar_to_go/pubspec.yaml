@@ -47,10 +47,10 @@ dependencies:
   flutter_dotenv: ^5.2.1
   image_picker: ^1.1.2
   fl_chart:
-  flutter_gemini: ^2.0.4
+  flutter_gemini: ^3.0.0
   dash_chat_2: ^0.0.21
   google_generative_ai: ^0.4.6
-  grouped_list: ^5.1.2
+  grouped_list: ^6.0.0
   pie_chart: 5.4.0
 dev_dependencies:
   flutter_test:
