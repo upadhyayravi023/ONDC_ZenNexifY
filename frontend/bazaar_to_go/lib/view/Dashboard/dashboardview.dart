@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bazaar_to_go/view/Dashboard/chat_bot.dart';
 import 'package:intl/intl.dart';
-
 import '../../widgets/barchat.dart';
 import '../../widgets/charts.dart';
 

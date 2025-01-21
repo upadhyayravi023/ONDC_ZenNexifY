@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../repository/api_service.dart';
 import '../../repository/endpoint.dart';
 import '../../widgets/profile.dart';
@@ -10,25 +8,21 @@ import '../auth/login_screen.dart';
 import 'accounts.dart';
 import 'help.dart';
 
-
 class ProfileView extends StatefulWidget {
   final String username;
 
   ProfileView({Key? key, required this.username}) : super(key: key);
 
   @override
-
   State<ProfileView> createState() => _ProfileViewState();
 }
 
 class _ProfileViewState extends State<ProfileView> {
-
-
   @override
   void initState() {
     super.initState();
-
   }
+
   Future<void> _onLogout() async {
     try {
       final response = await ApiService.post(
@@ -71,22 +65,20 @@ class _ProfileViewState extends State<ProfileView> {
     }
   }
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text('Profile')),
         shadowColor: Colors.blue,
         elevation: 3,
-
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            
             children: [
-             _buildPortraitLayout(context, widget.username),
+              _buildPortraitLayout(context, widget.username),
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () => _onLogout(),
@@ -97,12 +89,11 @@ class _ProfileViewState extends State<ProfileView> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30), // No rounded corners, makes it a rectangle
+                    borderRadius: BorderRadius.circular(
+                        30), // No rounded corners, makes it a rectangle
                   ),
                 ),
               ),
-
-
             ],
           ),
         ),
@@ -112,7 +103,6 @@ class _ProfileViewState extends State<ProfileView> {
 }
 
 Widget _buildPortraitLayout(BuildContext context, String username) {
-
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -127,13 +117,14 @@ Widget _buildPortraitLayout(BuildContext context, String username) {
               ),
               child: CircleAvatar(
                 radius: MediaQuery.of(context).size.width * 0.15,
-               // backgroundImage: NetworkImage(userData.avatarlink),
-               // onBackgroundImage: (_, __) => Icon(Icons.person, size: MediaQuery.of(context).size.width * 0.10),
+                // backgroundImage: NetworkImage(userData.avatarlink),
+                // onBackgroundImage: (_, __) => Icon(Icons.person, size: MediaQuery.of(context).size.width * 0.10),
               ),
             ),
             SizedBox(height: 10),
-            Text("name",
-             // userData.name,
+            Text(
+              "name",
+              // userData.name,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
           ],
@@ -143,11 +134,12 @@ Widget _buildPortraitLayout(BuildContext context, String username) {
       //Personal Information Section
       Row(
         children: [
-          Text('Personal Information', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Text('Personal Information',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           Spacer(),
           IconButton(
             icon: Icon(Icons.edit),
-          //  onPressed: () => Get.to(() => EditProfilePage()),
+            //  onPressed: () => Get.to(() => EditProfilePage()),
             onPressed: null,
           ),
           Text('Edit'),
@@ -183,30 +175,32 @@ Widget _buildPortraitLayout(BuildContext context, String username) {
         leading: Icon(Icons.phone_android),
       ),
       SizedBox(height: 10),
-     
 
       // Utilities Section
-      Text('Utilities', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      Text('Utilities',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
       ProfileInfoTile(
         title: 'Account Settings',
         value: '',
         leading: Icon(Icons.perm_identity),
-      onPressed: () => Get.to(() => AccountSettings(username: username)),
+        onPressed: () => Get.to(() => AccountSettings(username: username)),
       ),
       SizedBox(height: 10),
       ProfileInfoTile(
         title: 'Help Desk',
         value: '',
         leading: Icon(Icons.question_mark),
-        onPressed: () => Get.to(() => HelpDesk()),
-
+        onPressed: () {
+          Get.to(() => HelpDesk());
+        },
       ),
       SizedBox(height: 10),
-
+      ProfileInfoTile(
+        title: 'KYC Update',
+        value: '',
+        leading: Icon(Icons.verified_user),
+        onPressed: () {},
+      ),
     ],
   );
 }
-
-
-
-
