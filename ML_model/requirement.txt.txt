@@ -1,0 +1,20 @@
+Ocr-easyOCR
+image processing- openCV
+Image manipulation- PIL
+Data handling- pandas
+Datasbase- MongoDB
+API- Flask
+
+
+
+ml_model/
+├── app.py                # Flask API
+├── preprocessing.py      # Image preprocessing functions (OpenCV)
+├── ocr.py                # OCR using EasyOCR
+├── database.py           # MongoDB interaction
+├── datasets/             # Folder for input images
+├── outputs/              # Folder for output JSON files
+├── db_setup.py           # MongoDB initialization script
+└── requirements.txt      # Python dependencies
+
+
