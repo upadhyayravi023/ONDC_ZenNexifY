@@ -9,7 +9,7 @@ The app provides a **fixed template-based upload system**, supports **AI-powered
 
 - 📑 **Template-based Upload**: Sellers can upload product catalogs using a predefined format for consistency.  
 - 🤖 **AI Catalog Processing**: Integrated AI APIs automatically extract product details (e.g., name, specifications, price) from uploaded files/images.  
-- 🔗 **Amazon Seller API Integration**: Sync and publish products directly to your Amazon seller account.  
+- 🔗 **Amazon Product Advertising API (PA-API)**:.  
 - 📊 **Dashboard & Insights**: Monitor uploads, track product status, and view analytics.  
 - 🗄 **Database**: MongoDB for scalable and efficient data storage.  
 - 📱 **Mobile App**: Built with Flutter for smooth cross-platform performance.  
