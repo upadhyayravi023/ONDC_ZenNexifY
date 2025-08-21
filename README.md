@@ -27,5 +27,5 @@ The app provides a **fixed template-based upload system**, supports **AI-powered
 
 ---
 
-## 📂 Project Structure
+
 
